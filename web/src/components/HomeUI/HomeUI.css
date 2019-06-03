@@ -1,0 +1,16 @@
+#search-button, #add-room-button, #logout-button, #profile-button{
+  z-index: 1000000;
+  position: absolute;
+  margin: 0;
+}
+
+#search-button, #profile-button{top: 16px;}
+
+#profile-button{right: 16px; right: 16px; height: 72px; width: 72px;}
+#profile-button img{width: 64px; height: 64px; left: 0; top: 0;}
+#profile-button.hide{right: -72px;}
+
+#logout-button, #add-room-button{top: 22px; right: 22px;}
+#logout-button.hide, #add-room-button.hide{right: -72px;}
+#add-room-button.open{top: 128px;}
+#logout-button.open{top: 256px;}

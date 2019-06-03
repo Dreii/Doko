@@ -1,0 +1,106 @@
+.chat-header{
+  padding: 12px;
+  padding-bottom: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  height: 182px;
+  z-index: 1;
+  background: white;
+  border-bottom: 6px solid;
+}
+.chat-room.red .chat-header{border-color: #FF7675; box-shadow: 0 0 6px #FF7675;}
+.chat-room.green .chat-header{border-color: #55EFC4; box-shadow: 0 0 6px #55EFC4;}
+.chat-room.pink .chat-header{border-color: #F57DB7; box-shadow: 0 0 6px #F57DB7;}
+.chat-room.yellow .chat-header{border-color: #FDCB6E; box-shadow: 0 0 6px #FDCB6E;}
+
+
+
+
+.chat-exit-button{margin: 9px 24px 0 16px;}
+
+
+
+.chat-title{
+  width: 80%;
+  flex: 1 0 0;
+  display: inline-block;
+  margin: 0;
+}
+.chat-room.red .chat-title{color: #FF7675;}
+.chat-room.green .chat-title{color: #55EFC4;}
+.chat-room.pink .chat-title{color: #F57DB7;}
+.chat-room.yellow .chat-title{color: #FDCB6E;}
+
+
+
+.chat-room .distance{
+  position: relative;
+  display: inline-block;
+  bottom: 4px;
+  left: 4px;
+  margin: 0 16px;
+  font-size: 28px;
+  font-weight: bolder;
+  color: #C1C1C1;
+}
+.chat-room .distance::after{
+  content:'';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 70%;
+  height: 3px;
+  background: #C1C1C1;
+}
+
+
+
+.chat-info{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: 0 0 100%;
+}
+
+
+
+.chat-room .member-list{
+  width: 215px;
+  display: inline-flex;
+  justify-content: flex-end;
+}
+
+
+
+.chat-room .creator-profile{
+  margin-right: 8px;
+  display: inline-block;
+}
+
+
+
+.chat-room .member-count{
+  width: 48px;
+  height: 48px;
+  background-color: gray;
+  font-size: 16px;
+  color: white;
+  border-radius: 100%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: -6px;
+}
+.chat-room.red .member-count{background-color: #FF7675;}
+.chat-room.green .member-count{background-color: #55EFC4;}
+.chat-room.pink .member-count{background-color: #F57DB7;}
+.chat-room.yellow .member-count{background-color: #FDCB6E;}
+
+
+
+.chat-room .member-listing{
+  margin-right: -18px;
+  border: 2px solid white;
+}
+.chat-room .member-listing:last-of-type{margin-right: 0;}

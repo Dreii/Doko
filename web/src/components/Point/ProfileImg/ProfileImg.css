@@ -1,0 +1,10 @@
+.profile-img{
+  display: inline-block;
+  background-size: cover;
+  border-radius: 100%;
+}
+
+.profile-img.red{border: 2px solid #FF7675;}
+.profile-img.green{border: 2px solid #55EFC4;}
+.profile-img.pink{border: 2px solid #F57DB7;}
+.profile-img.yellow{border: 2px solid #FDCB6E;}

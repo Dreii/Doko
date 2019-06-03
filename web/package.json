@@ -1,14 +1,23 @@
 {
   "name": "web",
+  "proxy": "http://localhost:3001/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "d3-ease": "^1.0.5",
+    "dotenv": "^8.0.0",
+    "lorem-ipsum": "^2.0.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-scripts": "3.0.1"
+    "react-geolocated": "^2.5.0",
+    "react-loading": "^2.0.3",
+    "react-map-gl": "^4.1.3",
+    "react-scripts": "3.0.1",
+    "react-transition-group": "^4.1.0",
+    "socket.io-client": "^2.2.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "HTTPS=true react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
