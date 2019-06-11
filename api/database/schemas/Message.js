@@ -7,5 +7,7 @@ module.exports = {
     message: {type: String, default: ''},
     room: {type: Schema.Types.ObjectId, ref: 'Room'},
     sender: {type: Schema.Types.ObjectId, ref: 'User'},
+    created_at: {type: Date},
+    updated_at: {type: Date}
   }
 }

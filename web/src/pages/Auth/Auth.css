@@ -1,19 +1,53 @@
 .Auth{
-  background: url("/auth-back.png");
-  background-size: cover;
-  padding: 32px;
-  position: relative;
+  background: #ACD7E7;
   height: 100vh;
-}
-
-.Auth .logo{
-  display: block;
-  margin: 0 auto;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 .Auth .inner-container{
+  position: relative;
+  display: flex;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.175);
+  z-index: 1;
+}
+
+.logo{position: relative; display: block; margin: 64px auto 0 auto; z-index: 1;}
+.login-container, .signup-container, .profile-container{
+  flex: 0 0 100%;
   width: 100%;
-  margin: 0 auto;
+  padding: 32px;
   display: flex;
   flex-direction: column;
+}
+
+
+.button.facebook-login-button{color: white; background: #09A8E3; box-shadow: 3px 3px 6px rgba(9, 168, 227, .30);}
+.button.facebook-login-button:hover{box-shadow: 6px 6px 6px rgba(9, 168, 227, .30);}
+
+.button.google-login-button{color: white; background: #FF7675; box-shadow: 3px 3px 6px rgba(255, 118, 117, .30);}
+.button.google-login-button:hover{box-shadow: 6px 6px 6px rgba(255, 118, 117, .10);}
+
+
+.city-background-display{
+  position: relative;
+  z-index: 0;
+}
+
+.city-background-display .city, .city-background-display .sun{
+  position: absolute;
+  bottom: 0;
+  transition: transform 1s ease-out;
+}
+
+.city-background-display .sun{
+  background-color: #FFE8BE;
+  border-radius: 100%;
+  width: 50vw;
+  height: 50vw;
+  left: 25vw;
+}
+.city-background-display .city{
+  min-width: 960px;
+  width: 100vw;
 }

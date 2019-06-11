@@ -9,13 +9,13 @@ module.exports = (app) => {
       }else{
         return app.db.functions.createUser({
           email: req.body.email,
-          password: app.bcrypt.hashSync(req.body.password, 8),
+          password: app.bcrypt.hashSync(req.body.password, 8)
         })
       }
     })
     .then((user) => {
       console.log("created", user)
-      var token = app.jwt.sign({ _id: user._id, email: user.email, password: user.password }, app.JWTSECRET, {
+      var token = app.jwt.sign({ _id: user._id, email: user.email, password: user.password }, process.env.JWT_SECRET, {
         expiresIn: 86400 // expires in 24 hours
       })
       res.status(200).json({message: "success", token, user})

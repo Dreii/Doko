@@ -1,0 +1,64 @@
+.image-upload-image{
+  width: 156px;
+  height: 156px;
+  border-radius: 100%;
+  margin: 0 auto;
+  position: relative;
+  background-color: white;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  border: 3px solid white;
+
+  background-size: contain;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: content-box;
+}
+
+.image-upload-button{
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  background: white;
+  border-radius: 100%;
+  border: none;
+  outline: none;
+  bottom: 0;
+  right: 0;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-out;
+}
+
+.image-upload-button.no-image{
+  width: 156px;
+  height: 156px;
+  top: 0;
+  left: 0;
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0.1);
+}
+
+.image-upload-button input{display: none;}
+
+.image-upload-button label{
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-upload-button svg{
+  position: relative;
+  width: 50%;
+  height: 50%;
+  max-width: 48px;
+  max-height: 48px;
+}
+.image-upload-button svg path{transition: fill 0.1s ease-in;}
+
+.image-upload-button:hover svg path{
+  fill: #0984E3;
+}

@@ -1,3 +1,4 @@
+require('dotenv').config()
 const app = require('./functions/setup')
 
 app.listen(app.get("port"), () => {

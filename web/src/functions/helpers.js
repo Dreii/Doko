@@ -58,3 +58,27 @@ export function CalcDistance(latlngA, latlngB, isMiles){
 
   return distance;
 }
+
+
+export function HashCode(string) {
+  var hash = 0, i, chr, len;
+  if (string.length === 0) return hash;
+  for (i = 0, len = string.length; i < len; i++) {
+    chr   = string.charCodeAt(i);
+    hash  = ((hash << 5) - hash) + chr;
+    hash |= 0; // Convert to 32bit integer
+  }
+  return Math.abs(hash);
+}
+
+/**
+ * Returns a percentage value between a min and max value, adjusted by a speed percentage.
+ * @param       {[Number]} min   [lowest value that can go.]
+ * @param       {[Number]} max   [highest value can go.]
+ * @param       {[Number]} val   [value to interpolate]
+ * @param       {[Number]} speed [speed modifer 0 - 1]
+ * @constructor
+ */
+export function Tween(min, max, val, speed){
+  return val/(max-min)*(max*speed)
+}

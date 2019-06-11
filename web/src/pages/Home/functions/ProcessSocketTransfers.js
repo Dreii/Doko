@@ -1,25 +1,34 @@
 import API from '../../../functions/api'
-import {GenerateRandomColor} from '../../../functions/helpers'
-import FilterChatData from './FilterChatData'
+import {GenerateRandomColor, HashCode} from '../../../functions/helpers'
+import FilterRooms from './FilterRooms'
 
 export default function ProcessSocketTransfers(){
   return API.ConnectSocket(this.props.user)
   .then(socket => {
 
-    socket.on('SERVER_SENDING_ROOM_DATA', (newChatData) => {
-      newChatData.forEach((chat, i) => {
-        chat.color = GenerateRandomColor(i)
-        chat.members = chat.history.map(message => message.sender)
-        chat.members = [...new Set(chat.members)]
-      })
+    socket.on('SERVER_SENDING_ROOM_DATA', (rooms, messages) => {
+      rooms.forEach(room => {room.color = GenerateRandomColor(HashCode(room._id.toString()))})
 
-      let chatData = [...this.state.chatData, ...newChatData]
+      messages.forEach(message => message.color = GenerateRandomColor(HashCode(message._id.toString())))
+      messages = [...this.state.messages, ...messages]
 
-      chatData.sort((a, b) => a.distance > b.distance ? 1 : -1)
+      rooms = [...this.state.rooms, ...rooms]
+      rooms.sort((a, b) => a.distance > b.distance ? -1 : 1)
+      let filteredRooms = FilterRooms(this.state.searchString, rooms)
 
-      let filteredChatData = FilterChatData(this.state.searchString, chatData)
+      this.setState({rooms, filteredRooms: filteredRooms, messages, dataLoaded: true, lastDownloadTime: Date.now()})
+    })
 
-      this.setState({chatData: chatData, filteredChatData: filteredChatData, dataLoaded: true})
+    socket.on('ROOM_CREATED_NEARBY', roomData => {
+      console.log(roomData)
+    })
+
+    socket.on('ROOM_DELETED_NEARBY', roomID => {
+      console.log(roomID)
+    })
+
+    socket.on('NEW_CHAT', newMessage => {
+      this.setState({messages: [newMessage, ...this.state.messages]})
     })
 
     return socket

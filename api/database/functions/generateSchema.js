@@ -16,7 +16,6 @@ module.exports = (modelName, modelObject, modelIndexes, ...middleware) => {
   })
 
   modelIndexes && modelIndexes.forEach(modelIndex => {
-    // NewSchema.createIndex({[modelIndex.field]:modelIndex.value})
     NewSchema.index({[modelIndex.field]:modelIndex.value})
   })
 

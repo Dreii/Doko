@@ -18,5 +18,7 @@ module.exports = {
     },
     name: {type: String, default: ''},
     creator: {type: Schema.Types.ObjectId, ref: 'User'},
+    created_at: {type: Date},
+    updated_at: {type: Date}
   }
 }

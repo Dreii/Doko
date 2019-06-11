@@ -7,11 +7,15 @@ app.use(app.bodyParser.json())
 app.use(app.bodyParser.urlencoded({
   extended: true
 }))
+app.use((error, req, res, next) => res.status(500).send(err))
 
 //configure authentication tools
 app.jwt = require('jsonwebtoken')
 app.bcrypt = require('bcryptjs')
-app.JWTSECRET = require('./config').secret
+process.env.JWT_SECRET = process.env.JWT_SECRET
+
+//configure image upload controller
+app.ImageUpload = require('./ImageUpload')
 
 //setup database
 app.mongoose = require('mongoose')
@@ -29,8 +33,11 @@ if(app.DEBUG){
 
 //setup routes
 require('../routes/login')(app)
+require('../routes/fb-login')(app)
+require('../routes/google-login')(app)
 require('../routes/signup')(app)
 require('../routes/user-update')(app)
+require('../routes/image-upload')(app)
 
 //setup Socket.
 app.io = require('../socket/socket-controller')

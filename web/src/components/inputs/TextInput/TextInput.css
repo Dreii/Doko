@@ -1,0 +1,33 @@
+.TextInput{
+  position: relative;
+  display: block;
+  min-height: 64px;
+  border-radius: 6px;
+  font-size: 20px;
+  padding: 0 16px;
+  margin: 24px 0;
+  width: 100%;
+  border: none;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+  transition: all 0.2s ease-in;
+  color: #707070;
+  border: 0px solid #0984E3;
+}
+
+.TextInput::placeholder{
+  color: #3A8BCC;
+  font-weight: lighter;
+}
+
+.TextInput:hover{
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 6px 6px rgba(0, 0, 0, 0.16);
+}
+
+.TextInput:focus{
+  outline: none;
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 6px 6px rgba(9, 132, 227, 0.3);
+  border-width: 3px;
+  color: #0984E3;
+}

@@ -8,12 +8,20 @@ class API{
     return this.handleResponse(fetch(baseUrl+'/'+endpoint, payload))
   }
 
-  static ConnectSocket = (userID) => {
+  static UploadImage(auth, formData){
+    let payload = {...this.postFormData}
+    payload.headers.auth = auth
+    payload.body = formData
+
+    return this.handleResponse(fetch(baseUrl+'/image-upload', payload))
+  }
+
+  static ConnectSocket = (user) => {
     return new Promise((resolve, reject) => {
       console.log("attempting connection")
       const socket = io(socketUrl)
       socket.on('connect', ()=>{
-        socket.emit('USER_CONNECTED', userID)
+        socket.emit('USER_CONNECTED', user._id)
         resolve(socket)
       })
 
@@ -23,9 +31,10 @@ class API{
     })
   }
 
-  static RequestRooms(socket, userLoc, searchLoc, downloaded){
+  static RequestRooms(socket, userLoc, searchLoc, zoom, downloaded, lastDownloadTime){
+    console.log({socket, userLoc, searchLoc, zoom, downloaded})
     return new Promise((resolve, reject) => {
-      socket.emit('CLIENT_REQUESTING_ROOM_DATA', userLoc, searchLoc, downloaded)
+      socket.emit('CLIENT_REQUESTING_ROOM_DATA', userLoc, searchLoc, zoom, downloaded, lastDownloadTime)
       socket.on('SERVER_SENDING_ROOM_DATA', (roomData) => {
         resolve(roomData)
       })
@@ -36,6 +45,8 @@ class API{
       })
     })
   }
+
+
 
   static handleResponse(promise){
     return promise
@@ -57,6 +68,14 @@ API.postData = {
      accept: "application/json",
      "Content-type": "application/json",
    }
+}
+
+API.postFormData = {
+  method: "POST",
+  headers:{
+    // accept: "multipart/form-data",
+    // "Content-type": "multipart/form-data"
+  }
 }
 
 API.subscriptions = [];

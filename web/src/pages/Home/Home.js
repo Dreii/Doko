@@ -1,16 +1,19 @@
 import React, { Component } from 'react'
 import './Home.css'
-import HomeUI from '../../components/HomeUI/HomeUI'
+import HomeUI from '../../components/inputs/HomeUI/HomeUI'
 import Map from '../../components/Map/Map'
-import ChatsList from '../../components/ChatsList/ChatsList'
-import Chatroom from '../../components/Chatroom/Chatroom'
+import ChatsList from '../../components/chat/ChatsList/ChatsList'
+import Chatroom from '../../components/chat/Chatroom/Chatroom'
+
+import API from '../../functions/api'
 import ReactLoading from 'react-loading'
+
 import ChooseRoom from './functions/ChooseRoom'
-import FilterChatData from './functions/FilterChatData'
+import FilterRooms from './functions/FilterRooms'
 import HandleError from './functions/HandleError'
 import ProcessSocketTransfers from './functions/ProcessSocketTransfers'
 import {GetInitialLocation} from './functions/ProcessLocation'
-import API from '../../functions/api'
+
 
 class Home extends Component {
   state={
@@ -19,8 +22,10 @@ class Home extends Component {
     mapReady: false,
     uiReady: false,
     menuOpen: false,
-    chatData: [],
-    filteredChatData: [],
+    rooms: [],
+    filteredRooms: [],
+    messages: [],
+    lastDownloadTime: null,
     selectedRoom: 0,
     openRoom: null,
     searchOpen: false,
@@ -45,7 +50,7 @@ class Home extends Component {
       ProcessSocketTransfers.call(this)
       .then(socket => {
         this.setState({socket})
-        API.RequestRooms(socket, userPosition, userPosition, this.state.chatData.map(chat => chat._id))
+        API.RequestRooms(socket, userPosition, userPosition, 12, this.state.rooms.map(chat => chat._id), this.state.lastDownloadTime)
       })
 
     })
@@ -59,7 +64,7 @@ class Home extends Component {
       ProcessSocketTransfers.call(this)
       .then(socket => {
         console.log("got initial socket error")
-        API.RequestRooms(socket, null, defaultPos, this.state.chatData.map(chat => chat._id))
+        API.RequestRooms(socket, null, defaultPos, 12, this.state.rooms.map(chat => chat._id), this.state.lastDownloadTime)
       })
     })
   }
@@ -67,9 +72,9 @@ class Home extends Component {
   render() {
     let {user, SetAuth} = this.props
     let {
-          userPosition, viewPosition, menuOpen, chatData, filteredChatData,
+          userPosition, viewPosition, menuOpen, rooms, filteredRooms,
           selectedRoom, openRoom, searchOpen, searchString, chatValue,
-          error, errorLevel, uiReady, socket
+          messages, error, errorLevel, uiReady, socket
         } = this.state
 
     return (
@@ -82,13 +87,13 @@ class Home extends Component {
           user={user}
           openRoom={openRoom}
           searchString={searchString}
-          toggleSearchOpen={()=>this.setState({searchOpen: !searchOpen, searchString:"", filteredChatData: this.state.chatData, selectedRoom: 0})}
+          toggleSearchOpen={()=>this.setState({searchOpen: !searchOpen, searchString:"", filteredRooms: this.state.rooms, selectedRoom: 0})}
           searchOpen={searchOpen}
           menuOpen={menuOpen}
           toggleMenuOpen={()=>this.setState({menuOpen: !menuOpen})}
           setSearchString={(val)=>{
-            let filteredChatData = FilterChatData(val, chatData)
-            this.setState({searchString: val, filteredChatData, selectedRoom: 0})
+            let filteredRooms = FilterRooms(val, rooms)
+            this.setState({searchString: val, filteredRooms, selectedRoom: 0})
           }}
           SetAuth={SetAuth}
           error={error}
@@ -97,11 +102,12 @@ class Home extends Component {
         />
 
         <ChatsList
-          chatData={chatData}
-          filteredChatData={filteredChatData}
+          rooms={rooms}
+          messages={messages}
+          filteredRooms={filteredRooms}
           selectedRoom={selectedRoom}
           ScrollChatSelector={(dir)=>this.setState({
-            selectedRoom: Math.min(filteredChatData.length-1, Math.max(0, selectedRoom+dir))
+            selectedRoom: Math.min(filteredRooms.length-1, Math.max(0, selectedRoom+dir))
           })}
           selectRoom={(roomID)=>this.setState({selectedRoom: ChooseRoom.call(this, roomID)})}
           openRoom={(roomID)=>this.setState({openRoom: ChooseRoom.call(this, roomID), menuOpen: false, searchOpen: false})}
@@ -111,29 +117,27 @@ class Home extends Component {
 
         <Chatroom
           user={user}
-          chatroom={openRoom!==null ? chatData[openRoom]:null}
-          SetRoomData={(newRoomData)=>{
-            let chatData = this.state.chatData
-            chatData[newRoomData._id] = newRoomData
-            this.setState({chatData: chatData})
-          }}
+          socket={socket}
+          chatroom={openRoom!==null ? rooms[openRoom]:null}
+          messages={messages.filter(message => openRoom!==null ? rooms[openRoom]._id === message.room:[])}
           value={chatValue}
           SetValue={(val)=>this.setState({chatValue: val})}
-          CloseRoom={()=>this.setState({openRoom: null})}
+          CloseRoom={()=>this.setState({openRoom: null, chatValue: ""})}
         />
 
         {viewPosition && (
           <Map
             userPosition={userPosition}
             viewPosition={viewPosition}
-            chatData={chatData}
-            filteredChatData={filteredChatData}
+            rooms={rooms}
+            filteredRooms={filteredRooms}
+            messages={messages}
             selectedRoom={selectedRoom}
             selectRoom={(roomID)=>this.setState({selectedRoom: ChooseRoom.call(this, roomID)})}
             openRoom={(roomID)=>this.setState({openRoom: ChooseRoom.call(this, roomID)})}
             roomOpen={openRoom !== null}
             setError={(error, errorLevel)=>HandleError.call(this, error, errorLevel)}
-            SearchChats={(viewPosition)=>socket && API.RequestRooms(socket, userPosition, viewPosition, this.state.chatData.map(chat => chat._id))}
+            SearchChats={(viewPosition, zoom)=>socket && API.RequestRooms(socket, userPosition, viewPosition, zoom, this.state.rooms.map(chat => chat._id), this.state.lastDownloadTime)}
           />
         )}
       </div>

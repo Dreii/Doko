@@ -6,7 +6,7 @@ import {CSSTransition} from 'react-transition-group'
 import {easeCubic} from 'd3-ease'
 import {iRandom} from '../../functions/helpers'
 
-import Point from '../Point/Point'
+import Point from './Point'
 
 class Map extends Component {
 
@@ -25,16 +25,18 @@ class Map extends Component {
   }
 
   componentWillReceiveProps(newProps){
-    if(newProps.selectedRoom !== this.props.selectedRoom){
+    let {rooms, selectedRoom} = this.props
+    if(!rooms) return
+    if(newProps.selectedRoom !== selectedRoom){
       const viewport = {
-            ...this.state.viewport,
-            longitude: this.props.chatData[newProps.selectedRoom].coordinates.longitude,
-            latitude: this.props.chatData[newProps.selectedRoom].coordinates.latitude,
-            zoom: 12,
-            transitionDuration: 500,
-            transitionInterpolator: new LinearInterpolator(),
-            transitionEasing: easeCubic
-        }
+          ...this.state.viewport,
+          longitude: rooms[newProps.selectedRoom].location.coordinates[0],
+          latitude: rooms[newProps.selectedRoom].location.coordinates[1],
+          zoom: 12,
+          transitionDuration: 500,
+          transitionInterpolator: new LinearInterpolator(),
+          transitionEasing: easeCubic
+      }
       this.setState({viewport})
     }
   }
@@ -44,7 +46,7 @@ class Map extends Component {
   }
 
   render() {
-    let {userPosition, viewPosition, chatData, selectedRoom, openRoom, selectRoom, roomOpen, filteredChatData} = this.props
+    let {userPosition, viewPosition, rooms, selectedRoom, openRoom, selectRoom, roomOpen, filteredRooms, messages} = this.props
 
     return (
       <div className={`Map ${roomOpen ? "hide":""} ${this.state.mapLoaded && "ready"}`}>
@@ -65,19 +67,19 @@ class Map extends Component {
           onInteractionStateChange={UpdateChatSearch.bind(this)}
           ref={map => this.mapRef = map}
         >
-          {chatData.map((chatroom, i) => {
+          {rooms.map((room, i) => {
             let active = selectedRoom === i
             return(
-              <Marker key={chatroom._id} latitude={chatroom.coordinates.latitude} longitude={chatroom.coordinates.longitude}>
+              <Marker key={room._id} latitude={room.location.coordinates[1]} longitude={room.location.coordinates[0]}>
                 <CSSTransition in={this.state.mapLoaded} appear timeout={iRandom(1000)}>
                   <Point
                     map={this.map}
-                    color={chatroom.color}
-                    onClick={() => active ? openRoom(chatroom._id):selectRoom(chatroom._id)}
-                    chatId={chatroom.chatID}
-                    chatNumber={chatroom.history.length}
+                    color={room.color}
+                    onClick={() => active ? openRoom(room._id):selectRoom(room._id)}
+                    chatId={room.chatID}
+                    chatNumber={messages.filter(message => message.room === room._id).length}
                     selected={active}
-                    hide={filteredChatData ? !filteredChatData.find(filteredChat => filteredChat.id === chatroom.id):false}
+                    hide={filteredRooms ? !filteredRooms.find(filteredChat => filteredChat.id === room.id):false}
                   />
                 </CSSTransition>
               </Marker>
@@ -106,7 +108,6 @@ export default Map
 
 function UpdateChatSearch(){
   clearTimeout(this.delay)
-
   this.delay = setTimeout(()=>{
     let {viewport, oldViewport, mapInstance} = this.state
     oldViewport = oldViewport || this.props.viewPosition
@@ -117,7 +118,7 @@ function UpdateChatSearch(){
         screenDistY = Math.abs(newProj.y - oldProj.y)/viewport.zoom
 
     if(screenDistX > 10 || screenDistY > 10){
-      this.props.SearchChats({latitude: this.state.viewport.latitude, longitude: this.state.viewport.longitude})
+      this.props.SearchChats({latitude: this.state.viewport.latitude, longitude: this.state.viewport.longitude}, this.state.viewport.zoom)
       this.setState({oldViewport: {...this.state.viewport}, pulse: true})
       setTimeout(()=>this.setState({pulse: false}), 500)
     }

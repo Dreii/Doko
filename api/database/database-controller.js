@@ -21,6 +21,8 @@ class DatabaseController{
       verify: require('./functions/auth/verify')(this),
       checkFBID: require('./functions/auth/checkFBID')(this),
       checkFBToken: require('./functions/auth/checkFBToken'),
+      checkGoogleID: require('./functions/auth/checkGoogleID')(this),
+      checkGoogleToken: require('./functions/auth/checkGoogleToken'),
       authenticate: require('./functions/auth/authenticate')(this),
       createUser: require('./functions/auth/create-user')(this)
     }

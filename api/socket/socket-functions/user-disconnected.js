@@ -1,16 +1,13 @@
 /**
  * [Function to handle removing a socket/user from the socket controller list]
+ * @param  {DatabaseController} db [Database Controller]
  * @param  {Socket} socket [Socket that is disconnecting]
  */
 
-module.exports = function UserDisconnected(socket){
-  //find the index of the user socket object which
-  //coresponds to the socket that disconnected
-  let index = this.connectedUsers.findIndex(obj =>{
-    return obj.socket === socket
-  })
+module.exports = async function UserDisconnected(db, socket){
+  if(!socket) return
 
-  //splice out the user socket object at that findIndex
-  //from the list of connected users
-  this.connectedUsers.splice(index, 1)
+  console.log(userID, "disconnected")
+
+  let user = await db.schemas.User.findOneAndUpdate({socketID: socket.id}, {$set: {socketID: null, online: false, lastDownloadTime: null}}).exec()
 }
