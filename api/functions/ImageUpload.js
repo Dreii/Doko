@@ -21,12 +21,14 @@ let ImageUpload = multer({
 })
 
 ImageUpload.delete = (Key)=>{
-  console.log("key", Key)
   s3.deleteObject({
     Bucket: process.env.IMAGE_BUCKET_NAME,
     Key
   }, (err, data) => {
-    console.log(err, data)
+    if(err){
+      console.log(err, data)
+      
+    }
   })
 }
 

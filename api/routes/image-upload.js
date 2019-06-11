@@ -27,7 +27,7 @@ module.exports = app => {
   async function(req, res, next){
     let user = await app.db.schemas.User.findOne({_id: req.res.locals.id})
     if(user && user.image){
-      let index = user.image.indexOf(mediaCDN),
+      let index = user.image.indexOf(mediaCDN)+mediaCDN.length,
           key = index !== -1 ? user.image.substr(index):null
 
       if(key !== null) app.ImageUpload.delete(key)
