@@ -38,6 +38,7 @@ class App extends Component {
           // Once Auth and profile are ready, we display the normal app.
           <Home
             user={user}
+            auth={auth}
             SetAuth={(auth, user)=>{this.setState({auth, user})}}
           />
         )}

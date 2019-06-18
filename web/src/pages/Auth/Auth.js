@@ -27,57 +27,66 @@ class Auth extends Component {
     lastName: "", // Holds input for the last name field.
     image: "", // Holds URL of profile image once set.
     error: "", // Error string to be displayed.
-    errorShake: false, //Wether the error display should be shaking or not.
-    errorLevel: 0 //The intensity of the error, 0 for message, 1 for warning, 2 for error.
+    errorShowing: false, //Wether the error should display or not.
+    errorLevel: 0, //The intensity of the error, 0 for message, 1 for warning, 2 for error.
+    formTarget: "", //Target for success and loading states on the form
+    formLoading: false, //wether or not to show a loading state on target form button
   }
 
   //Validates login form, and sends a login request to the server,
   //processes the response and either sets the auth key and profile or displays an error.
   HandleLogin = () => {
     if(this.ValidateForm()){
-      this.setState({error:""})
-
+      this.SetLoading(true, "login")
       //SendPost returns a promise so we can manipulate the response.
       API.SendPost('login', {email: this.state.email, password: this.state.password})
       .then((res)=> {
         this.props.SetAuth(res.token, res.user)
-        this.ChangePage('profile')
       })
-      .catch(error => this.SetError(error.toString(), 2))
+      .catch(error => this.SetError(error.message, 2))
     }
   }
 
   HandleFacebookLogin = (data) => {
+    console.log(data)
+    if(!data || !data.accessToken) return this.SetError('Facebook authentication denied', 1)
     let filteredData = {accessToken: data.accessToken, userID: data.userID, email: data.email, name: data.name, imageURL: data.picture.data.url}
+
     API.SendPost('fb-login', filteredData)
     .then((res) => {
       this.props.SetAuth(res.token, res.user)
     })
-    .catch(error => this.SetError(error.toString(), 2))
+    .catch(error => this.SetError(error.message, 2))
   }
 
   HandleGoogleLogin = (data) => {
+    if(!data.tokenId) return this.SetError('Google authentication denied', 1)
+
     let filteredData = {accessToken: data.tokenId, userID: data.googleId, email: data.profileObj.email, name: data.profileObj.name, imageURL: data.profileObj.imageUrl}
     API.SendPost('google-login', filteredData)
     .then((res) => {
       this.props.SetAuth(res.token, res.user)
     })
-    .catch(error => this.SetError(error.toString(), 2))
+    .catch(error => {
+      console.log(error)
+      this.SetError(error.message, 1)}
+    )
   }
 
   //Validates signup form, and sends a signup request to the server,
   //processes the response and either sets the auth key and profile or displays an error.
   HandleSignup = () => {
     if(this.ValidateForm()){
-      this.setState({error:""})
+      this.SetLoading(true, "signup")
 
       //SendPost returns a promise so we can manipulate the response.
       API.SendPost('signup', {email: this.state.email, password: this.state.password})
       .then((res)=> {
         this.props.SetAuth(res.token, res.user)
+        this.SetLoading(false)
         this.ChangePage('profile')
       })
-      .catch(error => this.SetError(error.toString(), 2))
+      .catch(error => this.SetError(error.message, 2))
     }
   }
 
@@ -85,8 +94,7 @@ class Auth extends Component {
   //processes the response and either sets the updated profile data or displays an error.
   HandleProfileSubmit = () => {
     if(this.ValidateForm()){
-      this.setState({error:""})
-
+      this.SetLoading(true, "update-profile")
       //SendPost returns a promise so we can manipulate the response.
       API.SendPost('user-update', {
         auth: this.props.auth,
@@ -94,18 +102,22 @@ class Auth extends Component {
           name: this.state.firstName + " " + this.state.lastName
         }
       })
-      .then((res) => this.props.SetAuth(res.auth, res.user))
-      .catch(error => this.SetError(error.toString(), 2))
+      .then((res) => {
+        this.props.SetAuth(res.auth, res.user)
+      })
+      .catch(error => this.SetError(error.toString(), 1))
     }
   }
 
   //Set the error string, and level, then begin the shake animation and a timer to stop it.
   SetError = (errorString, errorLevel) => {
-    this.setState({error: errorString, errorShake: true, errorLevel})
+    console.error(errorString)
+    this.setState({error: errorString, errorShowing: true, errorLevel, formLoading: false})
+    window.clearTimeout(this.loadingTimer)
 
     //begin shake animation timer.
-    window.clearTimeout(this.errorShakeTimer)
-    this.errorShakeTimer = window.setTimeout(()=>this.setState({errorShake: false}), 100)
+    window.clearTimeout(this.errorFadeTimer)
+    this.errorFadeTimer = window.setTimeout(()=>this.setState({errorShowing: false}), 1500)
 
     //return false so that we can block form processing (check ValidateForm function).
     return false
@@ -117,20 +129,19 @@ class Auth extends Component {
     //pull out variables for easy access.
     let {page, email, password, passwordConfirm, image, firstName, lastName} = this.state
 
-    console.log(page, image, firstName, lastName)
-
     //make sure there are no blank fields on the login page.
-    if(page === "login" && (email === "" || password === "")) return this.SetError("Fields cannot be blank", 1)
+    if(page === "login" && (email === "" || password === "")) return this.SetError("Fields cannot be blank", 0)
 
     //make sure there are no blank fields on the Signup page and that the password confirm field is the same as password.
     //Also make sure that passwords are at least 5 characters long and contain letters and numbers.
-    if(page === "signup" && password !== passwordConfirm) return this.SetError("Passwords dont match", 1)
-    if(page === "signup" && password.length < 4) return this.SetError("Passwords must be at least 5 characters long", 1)
-    if(page === "signup" && password.match('([0-9].*[a-zA-Z])\|([a-zA-Z].*[0-9])') === null) return this.SetError("Password requires at least one letter and one number", 1)
-    if(page === "signup" && (email === "" || password === "" || passwordConfirm === "")) return this.SetError("Fields cannot be blank", 1)
+    if(page === "signup" && (email === "" || password === "" || passwordConfirm === "")) return this.SetError("Fields cannot be blank", 0)
+    if(page === "signup" && email.match(/^\S+@\S+[\.][0-9a-z]+$/) === null) return this.SetError("Invalid email", 0)
+    if(page === "signup" && password !== passwordConfirm) return this.SetError("Passwords dont match", 0)
+    if(page === "signup" && password.length < 4) return this.SetError("Password too short", 0)
+    if(page === "signup" && password.match(/([0-9].*[a-zA-Z])|([a-zA-Z].*[0-9])/) === null) return this.SetError("Password needs letters and numbers", 0)
 
     //make sure there are no blank fields on the profile setup page.
-    if(page === "profile" && (image === "" || firstName === "" || lastName === "")) return this.SetError("Fields cannot be blank", 1)
+    if(page === "profile" && (image === "" || firstName === "" || lastName === "")) return this.SetError("Fields cannot be blank", 0)
     //if no errors have been found return true to confinue processing the form.
     return true
   }
@@ -145,9 +156,41 @@ class Auth extends Component {
   //this allows the ui to slide to the left and right when changing pages.
   GetPageXPos = (page) => page === "login" ? 0 : page === "signup" ? 100 : 200
 
+  SetLoading = (formLoading, formTarget) => {
+    if(formLoading){
+      //begin loading timer.
+      window.clearTimeout(this.loadingTimer)
+      this.loadingTimer = window.setTimeout(()=>{
+        this.setState({formLoading: false})
+        this.SetError("Server Timed out", 2)
+      }, 15000)
+    }else{
+      window.clearTimeout(this.loadingTimer)
+    }
+    this.setState({formLoading, formTarget})
+  }
+
+  HandleEnterPressed = (e) => {
+    if(e.key !=='Enter') return
+
+    let {page, formLoading} = this.state
+    if(!formLoading){
+      if(page === "login") this.HandleLogin()
+      if(page === "signup") this.HandleSignup()
+      if(page === "profile") this.HandleProfileSubmit()
+    }
+  }
+
+  componentDidMount(){window.addEventListener('keyup', this.HandleEnterPressed)}
+  componentWillUnmount(){
+    window.removeEventListener('keyup', this.HandleEnterPressed)
+    window.clearTimeout(this.errorFadeTimer)
+    window.clearTimeout(this.loadingTimer)
+  }
+
   render() {
     // extract variables from state and props for easy acess
-    let {page, error, errorShake, errorLevel, email, password, passwordConfirm, firstName, lastName, image} = this.state
+    let {page, error, errorShowing, errorLevel, email, password, passwordConfirm, firstName, lastName, image, formTarget, formLoading} = this.state
     let {auth, user} = this.props
 
     //default the page to profile if the name or image data is not set but everything else is.
@@ -155,8 +198,8 @@ class Auth extends Component {
 
     return (
       <div className="Auth">
-        <img className="logo" src="/doko-logo.svg" alt="logo"/>
-        <Error error={error} level={errorLevel} shake={errorShake} />
+        <img className="logo" src="/doko-logo.svg" alt="logo" />
+        <Error error={error} level={errorLevel} show={errorShowing} />
         {/* translate the inner-container X when page changes to slide UI around. */}
         <div className="inner-container" style={{transform: `translateX(-${this.GetPageXPos(page)}vw)`}}>
 
@@ -166,10 +209,15 @@ class Auth extends Component {
             password={password}
             ChangeField={this.ChangeField}
             HandleLogin={this.HandleLogin}
+            HandleFacebookClick={() => {this.SetLoading(true, "fb-login")}}
             HandleFacebookLogin={this.HandleFacebookLogin}
+            HandleGoogleClick={() => {console.log("g -loading"); this.SetLoading(true, "g-login")}}
             HandleGoogleLogin={this.HandleGoogleLogin}
             ChangePage={this.ChangePage}
             HandleError={this.SetError}
+            loginLoading={formTarget === "login" && formLoading}
+            fbLoginLoading={formTarget === "fb-login" && formLoading}
+            gLoginLoading={formTarget === "g-login" && formLoading}
           />
 
           {/* Handles signup inputs. */}
@@ -180,6 +228,7 @@ class Auth extends Component {
             ChangeField={this.ChangeField}
             HandleSignup={this.HandleSignup}
             ChangePage={this.ChangePage}
+            loading={formTarget === "signup" && formLoading}
           />
 
           {/* Handles profile image upload as well as name inputs. */}
@@ -192,6 +241,7 @@ class Auth extends Component {
             ChangeField={this.ChangeField}
             HandleProfileSubmit={this.HandleProfileSubmit}
             HandleError={this.SetError}
+            loading={formTarget === "profile-update" && formLoading}
           />
         </div>
 

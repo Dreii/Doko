@@ -1,16 +1,31 @@
 import React from 'react'
 import './Button.css'
 
-const Button = ({noBack, primary, profile, icon, iconAlt, value, onClick, alt, style, className, id}) => (
+import CheckIcon from '../../display/Icons/CheckIcon'
+import ReactLoading from 'react-loading'
+
+const Button = ({
+  noBack, primary, profile, icon,
+  svgIcon, iconAlt, value, onClick,
+  alt, style, className, id, loading,
+  success, disabled
+}) => (
   <button
     id={id}
-    className={`button ${className} ${icon ? "icon":""} ${profile ? "profile":""} ${value ? "value":""} ${primary ? "primary":""} ${noBack ? "no-back":""}`}
+    className={`button ${className} ${icon ? "icon":""} ${profile ? "profile":""} ${value ? "value":""} ${primary ? "primary":""} ${noBack ? "no-back":""} ${success ? "success":""}`}
     onClick={onClick}
     alt={alt||"button"}
+    disabled={loading || success || disabled}
     style={style}
   >
-    {icon ? <img className="button-icon" src={icon} alt={iconAlt || "button icon"}/>:null}
-    {value ? <span>{value}</span>:null}
+    {loading ? (<ReactLoading type="spin" color={primary ? "white":"#707070"} height={32} width={32} />):(success ? (<CheckIcon color="white"/>):(
+      <div className="button-inner">
+        {icon ? <img className="button-icon" src={icon} alt={iconAlt || "button icon"}/>:null}
+        {svgIcon}
+        {value ? <span>{value}</span>:null}
+      </div>
+      )
+    )}
   </button>
 )
 

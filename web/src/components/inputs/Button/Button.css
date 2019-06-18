@@ -1,20 +1,34 @@
 .button{
   border: none;
-  box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.10);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.10);
   height: 58px;
   width: 58px;
-  font-weight: bold;
+  font-weight: normal;
   font-size: 20px;
   margin: 16px auto;
+  padding: 3px;
   transition: all 0.2s ease-in;
   cursor: pointer;
   background: white;
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button svg{
+  transition: fill 0.2s ease-in;
+}
+
+.button .button-inner{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .button.primary{
   background: #0984E3;
-  box-shadow: 3px 3px 6px rgba(9, 132, 227, .30);
+  box-shadow: 0 3px 6px rgba(9, 132, 227, .30);
   color: white;
 }
 
@@ -25,18 +39,12 @@
 
 .button:hover{
   outline: none;
-  box-shadow: 6px 6px 6px rgba(0, 0, 0, .10);
+  box-shadow: 0 6px 6px rgba(0, 0, 0, .10);
   transform: translateY(-3px) scale(1.01);
 }
 
 .button.primary:hover{
-  box-shadow: 6px 6px 6px rgba(9, 132, 227, .30);
-}
-
-.button img{
-  position: absolute;
-  left: 24px;
-  top: 14px;
+  box-shadow: 0 6px 6px rgba(9, 132, 227, .30);
 }
 
 .button.no-back, .button.no-back:hover, .button.no-back:focus, .button.no-back:active{
@@ -53,8 +61,15 @@
   line-height: 0;
   border: 3px solid #0984E3;
 }
-.button.profile img{
-  max-width: 64px;
-  min-width: 64px;
-  border-radius: 64px;
+
+.button span{
+  margin-left: 16px;
+}
+
+.button.success{
+  background-color: #71CB7F;
+  box-shadow: 0 3px 6px rgba(113, 203, 127, .30);
+}
+.button.success:hover{
+  box-shadow: 0 3px 6px rgba(113, 203, 127, .30);
 }

@@ -26,10 +26,10 @@ export default class ImageTools {
 
         const types = ['image/png', 'image/jpeg']
         if(types.every(type => file.type !== type))
-          reject(`'${file.type}' is not a supported format`)
+          reject(`File type not supported`)
 
         if (file.size > 150000)
-          reject(`'${file.name}' is too large, please pick a smaller file`)
+          reject(`Image too large`)
 
         this.resize(file, maxDimensions, (file, processed) => {
           resolve(file)

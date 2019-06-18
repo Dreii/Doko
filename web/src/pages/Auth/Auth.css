@@ -22,8 +22,8 @@
 }
 
 
-.button.facebook-login-button{color: white; background: #09A8E3; box-shadow: 3px 3px 6px rgba(9, 168, 227, .30);}
-.button.facebook-login-button:hover{box-shadow: 6px 6px 6px rgba(9, 168, 227, .30);}
+.button.facebook-login-button:not(.success){color: white; background: #09A8E3; box-shadow: 3px 3px 6px rgba(9, 168, 227, .30);}
+.button.facebook-login-button:hover:not(.success){box-shadow: 6px 6px 6px rgba(9, 168, 227, .30);}
 
 .button.google-login-button{color: white; background: #FF7675; box-shadow: 3px 3px 6px rgba(255, 118, 117, .30);}
 .button.google-login-button:hover{box-shadow: 6px 6px 6px rgba(255, 118, 117, .10);}

@@ -23,10 +23,12 @@ class AutoResizableTextArea extends Component {
 
   handleKeyDown(e){if(e.key === 'Shift') this.setState({shiftPressed:true})}
   handleKeyUp(e){
-    if(e.key === 'Shift') this.setState({shiftPressed:false})
-    if(e.key === 'Enter' && !this.state.shiftPressed && this.props.value.trim() !== ""){
-      this.props.onSend()
-      this.setState({rows: this.state.minRows})
+    if(this.props.value !== ""){
+      if(e.key === 'Shift') this.setState({shiftPressed:false})
+      if(e.key === 'Enter' && !this.state.shiftPressed && this.props.value.trim() !== ""){
+        this.props.onSend()
+        this.setState({rows: this.state.minRows})
+      }
     }
   }
 
@@ -48,8 +50,11 @@ class AutoResizableTextArea extends Component {
 			event.target.scrollTop = event.target.scrollHeight
 		}
 
-    this.props.SetValue(event.target.value)
-  	this.setState({rows: currentRows < maxRows ? currentRows : maxRows,})
+    let val = event.target.value
+    if(val !== " " && val !== "\n"){
+      this.props.SetValue(val)
+      this.setState({rows: currentRows < maxRows ? currentRows : maxRows})
+    }
 	}
 
   render() {

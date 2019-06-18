@@ -1,0 +1,56 @@
+
+#placing-room-container, #placing-room-text, #placing-room-back-button, #placing-room-button{
+  position: absolute;
+}
+
+#placing-room-container{
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 16px;
+}
+
+#placing-room-text{
+  bottom: 114px;
+  width: 100%;
+  font-size: 24px;
+  text-align: center;
+  color: #0984E3;
+  font-weight: bold;
+  z-index: 100;
+}
+
+#placing-room-location-search{
+  z-index: 100;
+  pointer-events: all;
+  border-radius: 70px;
+  padding: 0 28px;
+}
+
+#placing-room-location-search-button{
+  margin: 24px 16px;
+  flex: 0 0 58px;
+  border-radius: 100%;
+  pointer-events: all;
+}
+
+#placing-room-back-button{
+  bottom: 32px;
+  left: 16px;
+  border-radius: 100%;
+  pointer-events: all;
+}
+
+#placing-room-button{
+  bottom: 32px;
+  /* background-color: #71CB7F; */
+  color: white;
+  width: 128px;
+  z-index: 100;
+  pointer-events: all;
+}

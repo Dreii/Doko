@@ -6,16 +6,16 @@
   cursor: pointer;
   transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   animation: pop-in 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-  animation-play-state: paused;
+  /* animation-play-state: running; */
 
 }
-.point.enter{
+/* .point.enter{
   transform: scale(0);
-}
+} */
 
-.point.enter-done{
+/* .point.enter-done{
   animation-play-state: running;
-}
+} */
 
 @keyframes pop-in{0%{transform: scale(0)} 100%{transform: scale(1)}}
 
@@ -41,14 +41,14 @@
   position: absolute;
   width: 30px;
   height: 30px;
-  background: rgba(100, 100, 100, 0.5);
+  background-color: rgba(100, 100, 100, 0.5);
   border-radius: 100%;
   transition: all 0.3s ease-out;
   box-shadow: 0 0 0 white;
   border: 0px solid white;
 }
 
-.point.red .chat-number{background-color: #FF7675; color: #AD2A29;}
+.point.red .chat-number{background-color: #FFA3A2; color: #AD2A29;}
 .point.green .chat-number{background-color: #55EFC4; color: #1CAC83;}
 .point.pink .chat-number{background-color: #F57DB7; color: #8B2C5A;}
 .point.yellow .chat-number{background-color: #FDCB6E; color: #BF8D2F;}
@@ -63,7 +63,7 @@
 .point.selected .point-background{width: 54px; height: 54px;}
 
 .point.selected.red .point-background{
-  border: 1px solid #FF7675;
+  border: 1px solid #FFA3A2;
   background-color: rgba(255, 163, 162, 0.8);
   box-shadow: 0 0 12px rgba(255, 118, 117, 0.5);
 }

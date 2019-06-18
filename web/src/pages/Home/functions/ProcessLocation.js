@@ -20,7 +20,7 @@ export function WatchLocation(){
 function handleLocation(position) {
   // ...do stuff
   console.log(position)
-  return Promise.resolve(position)
+  this.setState({userPosition: {latitude: position.coords.latitude, longitude: position.coords.longitude}})
 }
 
 function handleLocationError(error) {

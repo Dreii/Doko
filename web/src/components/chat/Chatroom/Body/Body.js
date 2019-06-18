@@ -8,7 +8,7 @@ const Body = ({chatroom, messages, user}) => (
   <div className="chat-body">
     {
       messages.map((message, i) => (
-        message.sender._id === user._id ?
+        message.sender !== null && message.sender._id === user._id ?
         <UserSentMessage message={message} key={i}/>:<Message chatroom={chatroom} message={message} key={i}/>
       ))
     }
@@ -19,15 +19,13 @@ const Body = ({chatroom, messages, user}) => (
 export default Body
 
 function Message({chatroom, message}){
-  let randomSeed = Math.abs(HashCode(message.sender.name))
-  let color = (message.sender._id === chatroom.creator._id) ?
-  (chatroom.color):(GenerateRandomColor(randomSeed, chatroom.color))
+  let color = (message.sender && message.sender._id === chatroom.creator._id) ? chatroom.color : message.color
 
   return(
-    <div className={`chat-message ${color}`}>
-      <ProfileImg className="chat-message-sender" img={message.sender.image} size={28} />
+    <div className={`chat-message ${color} ${message.sender ? "": "missing-user"}`}>
+      <ProfileImg className="chat-message-sender" img={message.sender ? message.sender.image : '/user-missing-icon.svg'} size={28} />
       <p className="chat-message-text">
-        <span className="chat-message-name">{message.sender.name}</span>
+        <span className="chat-message-name">{message.sender ? message.sender.name : "Deleted User"}</span>
         {message.message}
       </p>
     </div>

@@ -1,0 +1,36 @@
+.cross-hair{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+}
+
+.cross-hair .x-axis{
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  border-left: 1px solid #707070;
+}
+
+.cross-hair .y-axis{
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  border-top: 1px solid #707070;
+}
+
+.cross-hair .dot{
+  width: 8px;
+  height: 8px;
+  background-color: #707070;
+  border-radius: 100%;
+}

@@ -8,7 +8,7 @@
 .Map.ready{animation: fade-in 1s ease-out forwards;}
 @keyframes fade-in{100%{opacity: 1}}
 
-.Map.hide .point{
+.Map.hide .point, .Map.hide .point .point-background, .Map.hide .point .chat-number{
   transform: scale(0);
 }
 
@@ -20,6 +20,7 @@
   border-radius: 100%;
   border: 2px solid white;
   box-shadow: 0 0 12px #0984E3;
+  pointer-events: none;
 }
 
 #location-indicator::after{
@@ -71,4 +72,16 @@
 @keyframes blow-in{
   0%{transform: scale(0); opacity: 1;}
   100%{transform: scale(1); opacity: 0;}
+}
+
+#location-button{
+  border-radius: 100%;
+  position: fixed;
+  bottom: 208px;
+  right: 16px;
+  z-index: 10000000000;
+}
+
+#location-button.bottom{
+  bottom: 32px;
 }

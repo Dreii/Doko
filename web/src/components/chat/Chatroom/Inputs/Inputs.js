@@ -13,7 +13,7 @@ const Inputs = ({value, SetValue, SendMessage}) => (
       SetValue={SetValue}
       onSend={SendMessage}
     />
-    <Button className="chat-send-button" primary icon="/send-icon.svg" onClick={SendMessage} />
+    <Button className="chat-send-button" primary icon="/send-icon.svg" disabled={value.length === 0} onClick={SendMessage} />
   </div>
 )
 

@@ -1,15 +1,17 @@
 .chats{
-  height: 152px;
+  height: 164px;
   width: 100vw;
   position: absolute;
   bottom: 34px;
-
+  overflow-x: auto;
+  scroll-behavior: smooth;
   display: flex;
-
   transition: bottom 0.3s ease-out, opacity 0.3s ease-out;
   z-index: 1000000;
-
+  overflow: -moz-scrollbars-none;
+  -ms-overflow-style: none;
 }
+.chats::-webkit-scrollbar { width: 0 !important }
 
 .chats.hide{
   bottom: -158px;
@@ -37,15 +39,16 @@
 
 @keyframes slide-up{0%{opacity: 0; bottom: -1000px} 100%{opacity: 1; bottom: 0;}}
 
-.chat.active.red{border: 3px solid #FF7675; box-shadow: 6px 12px 0 rgba(255, 163, 162, 0.5)/*#FF7675*/;}
+.chat.active.red{border: 3px solid #FFA3A2; box-shadow: 6px 12px 0 rgba(255, 163, 162, 0.5)/*#FFA3A2*/;}
 .chat.active.green{border: 3px solid #55EFC4; box-shadow: 6px 12px 0 rgba(131, 248, 216, 0.5)/*#55EFC4*/;}
 .chat.active.pink{border: 3px solid #F57DB7; box-shadow: 6px 12px 0 rgba(248, 115, 180, 0.5)/*#F57DB7*/;}
 .chat.active.yellow{border: 3px solid #FDCB6E; box-shadow: 6px 12px 0 rgba(255, 205, 111, 0.5)/*#FDCB6E*/;}
 
-.chat.red{border: 3px solid #E8BCBB; box-shadow: 6px 12px 0 rgba(232, 188, 187, 0.5)/*#E8BCBB*/;}
-.chat.green{border: 3px solid #ABDED0; box-shadow: 6px 12px 0 rgba(171, 222, 208, 0.5)/*#ABDED0*/;}
-.chat.pink{border: 3px solid #EABDD3; box-shadow: 6px 12px 0 rgba(234, 189, 211, 0.5)/*#EABDD3*/;}
-.chat.yellow{border: 3px solid #EFD7AB; box-shadow: 6px 12px 0 rgba(239, 215, 171, 0.5)/*#EFD7AB*/;}
+.chat:not(.active){box-shadow: 0 0 0 white;}
+.chat.red{border: 3px solid #E8BCBB; /*box-shadow: 6px 12px 0 rgba(232, 188, 187, 0.5)*/}
+.chat.green{border: 3px solid #ABDED0; /*box-shadow: 6px 12px 0 rgba(171, 222, 208, 0.5);*/}
+.chat.pink{border: 3px solid #EABDD3; /*box-shadow: 6px 12px 0 rgba(234, 189, 211, 0.5);*/}
+.chat.yellow{border: 3px solid #EFD7AB; /*box-shadow: 6px 12px 0 rgba(239, 215, 171, 0.5);*/}
 
 .chat .title{
   font-size: 20px;
@@ -54,7 +57,7 @@
   padding: 0 16px;
 }
 
-.chat.red.active .title{color: #FF7675;}
+.chat.red.active .title{color: #FFA3A2;}
 .chat.green.active .title{color: #55EFC4;}
 .chat.pink.active .title{color: #F57DB7;}
 .chat.yellow.active .title{color: #FDCB6E;}
@@ -109,7 +112,7 @@
   display: inline-block;
 }
 
-.chat.red.active .creator-profile{border-color: #FF7675;}
+.chat.red.active .creator-profile{border-color: #FFA3A2;}
 .chat.green.active .creator-profile{border-color: #55EFC4;}
 .chat.pink.active .creator-profile{border-color: #F57DB7;}
 .chat.yellow.active .creator-profile{border-color: #FDCB6E;}
@@ -132,7 +135,7 @@
   margin-right: -6px;
 }
 
-.chat.red.active .member-count{background-color: #FF7675;}
+.chat.red.active .member-count{background-color: #FFA3A2;}
 .chat.green.active .member-count{background-color: #55EFC4;}
 .chat.pink.active .member-count{background-color: #F57DB7;}
 .chat.yellow.active .member-count{background-color: #FDCB6E;}
@@ -155,3 +158,32 @@
   flex-basis: 48px;
   width: 48px;
 }
+
+.chat .subscription-button{
+  margin: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 42px;
+  height: 42px;
+}
+
+.chat .subscription-button svg{
+  fill: #b6b6b6;
+  transition: fill 0.3s ease-in;
+}
+
+.chat.red .subscription-button:hover svg{fill: #FFA3A2;}
+.chat.green .subscription-button:hover svg{fill: #55EFC4;}
+.chat.pink .subscription-button:hover svg{fill: #F57DB7;}
+.chat.yellow .subscription-button:hover svg{fill: #FDCB6E;}
+
+.chat.red .subscription-button.pinned svg{fill: #E8BCBB;}
+.chat.green .subscription-button.pinned svg{fill: #ABDED0;}
+.chat.pink .subscription-button.pinned svg{fill: #EABDD3;}
+.chat.yellow .subscription-button.pinned svg{fill: #EFD7AB;}
+
+.chat.red.active .subscription-button.pinned svg{fill: #FFA3A2;}
+.chat.green.active .subscription-button.pinned svg{fill: #55EFC4;}
+.chat.pink.active .subscription-button.pinned svg{fill: #F57DB7;}
+.chat.yellow.active .subscription-button.pinned svg{fill: #FDCB6E;}
