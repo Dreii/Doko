@@ -3,7 +3,7 @@ module.exports = (app) => {
     return app.db.functions.verify(req.body.email)
     .then(user => {
       if(user) return app.db.functions.authenticate(user, req.body.password)
-      else throw new Error("A user with that email doesn't exist.")
+      else throw new Error("No user with that email.")
     })
     .then(user => {
       if(user){
@@ -13,12 +13,12 @@ module.exports = (app) => {
         res.json({message: "success", token, user})
       }
       else{
-        throw new Error("No user found with that email and password.")
+        throw new Error("No user with that email.")
       }
     })
     .catch((error) => {
       console.log(error)
-      res.status(401).json({ error: error.message })
+      res.status(401).send({ error: error.message })
     })
   })
 }

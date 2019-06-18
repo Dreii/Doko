@@ -6,7 +6,7 @@
  */
 
 module.exports = async function ConnectUser(db, socket, userID){
-  console.log(userID, "connected")
-  if(!userID) return
+  console.log(userID, socket.id, "connected")
+  if(!userID) throw Error('User ID not found!')
   let user = await db.schemas.User.findOneAndUpdate({_id: userID}, {$set: {socketID: socket.id, online: true}}).exec()
 }

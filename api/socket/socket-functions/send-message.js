@@ -28,7 +28,7 @@ module.exports = async function(db, userID, roomID, message, sendTime){
       {
         lastLocation: {
           $near: {
-            $geometry: { type: "Point",  coordinates: [ room.location.coordinates[0], room.location.coordinates[1] ] },
+            $geometry: { type: "Point",  coordinates: [ room.location[0], room.location[1] ] },
             $maxDistance: 10000
           }
         }
@@ -36,9 +36,7 @@ module.exports = async function(db, userID, roomID, message, sendTime){
     ]
   }, 'socketID').exec()
 
-  console.log(newMessage)
-
   usersSockets.forEach(user => {
-    this.io.sockets.in(user.socketID).emit("NEW_CHAT", newMessage)
+    this.io.sockets.in(user.socketID).emit("NEW_MESSAGE", newMessage)
   })
 }

@@ -25,8 +25,7 @@ app.db = require("../database/database-controller")
 app.db.init()
 
 //add fakes if in debug mode
-app.DEBUG = require("./config").debug
-if(app.DEBUG){
+if(process.env.DEBUG === "true"){
   //fake data for testing
   require('./fakes/AddFakes')(app)
 }
@@ -38,6 +37,7 @@ require('../routes/google-login')(app)
 require('../routes/signup')(app)
 require('../routes/user-update')(app)
 require('../routes/image-upload')(app)
+require('../routes/search-location')(app)
 
 //setup Socket.
 app.io = require('../socket/socket-controller')

@@ -41,13 +41,10 @@ module.exports = async function AddFakes(app){
     let fakeRooms = []
     for(let i=0; i<iRandomRange(10, 15); i++){
       fakeRooms.push({
-        location: {
-          type: 'Point',
-          coordinates:[
-            RandomRange(-97.717556, -97.785877),
-            RandomRange(30.21338, 30.314794)
-          ]
-        },
+        location: [
+          RandomRange(-97.717556, -97.785877),
+          RandomRange(30.21338, 30.314794)
+        ],
         name: lorem.generateWords(iRandomRange(3, 5)),
         creator: randomInArray(users)._id,
         created_at: new Date(),
