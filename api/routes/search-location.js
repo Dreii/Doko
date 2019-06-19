@@ -5,7 +5,7 @@ module.exports = (app) => {
   require('../functions/CheckAuthToken')(app),
   (req, res) => {
     try{
-      let endpoint = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(req.body.query)}&key=AIzaSyAo192C7szGPfwsqdkCzrW_clm_bKbVy88`
+      let endpoint = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(req.body.query)}&key=${process.env.GSEARCHKEY}`
       return fetch(endpoint)
       .then(response => response.json())
       .then(response => {
