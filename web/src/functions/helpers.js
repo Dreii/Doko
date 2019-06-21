@@ -10,18 +10,6 @@ export function randomInArray(array){
   return array[Math.ceil(Math.random()*array.length-1)]
 }
 
-export function GenerateRandomProfile(id){
-  if(id === undefined) id = 1000+iRandom(3000000)
-  let img = `/test-person-images/${randomInArray(['person-1.png', 'person-2.png', 'person-3.png', 'person-4.png', 'person-5.png', 'person-6.png', 'person-7.png', 'person-8.png', 'person-9.png'])}`
-  let name = randomInArray(['Skye Aoki', 'Matt Jenkins', 'Brooke Lynne Alcuran', 'Logan Alcott', 'Thomas Baldwin', 'Ian Ross', 'Hunter S. Thompson', 'Adrienne Wilson', 'Nathan Char'])
-
-  return {id, img, name}
-}
-
-export function RandomProfileTestImage(){
-  return `/test-person-images/${randomInArray(['person-1.png', 'person-2.png', 'person-3.png', 'person-4.png', 'person-5.png', 'person-6.png', 'person-7.png', 'person-8.png', 'person-9.png'])}`
-}
-
 export function GenerateRandomColor(originalIndex, excludedColor){
   let colors = ['red', 'green', 'pink', 'yellow']
   colors = colors.filter(color => color!==excludedColor)
@@ -34,41 +22,16 @@ export function GenerateRandomColor(originalIndex, excludedColor){
 }
 
 
-/**
- * Calculates the haversine distance between point A, and B.
- * @param {number[]} latlngA [lat, lng] point A
- * @param {number[]} latlngB [lat, lng] point B
- * @param {boolean} isMiles If we are using miles, else km.
- */
-export function CalcDistance(latlngA, latlngB, isMiles){
-  const toRad = x => (x * Math.PI) / 180;
-  const R = 6371; // km
+export function CalcDistance(lat1, lon1, lat2, lon2) {
+	// let R = 6371
+  let p = 0.017453292519943295    // Math.PI / 180
+  let c = Math.cos
+  let a = 0.5 - c((lat2 - lat1) * p)/2 +
+          c(lat1 * p) * c(lat2 * p) *
+          (1 - c((lon2 - lon1) * p))/2
 
-  const dLat = toRad(latlngB[0] - latlngA[0]);
-  const dLatSin = Math.sin(dLat / 2);
-  const dLon = toRad(latlngB[1] - latlngA[1]);
-  const dLonSin = Math.sin(dLon / 2);
-
-  const a = (dLatSin * dLatSin) +
-            (Math.cos(toRad(latlngA[1])) * Math.cos(toRad(latlngB[1])) * dLonSin * dLonSin);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  let distance = R * c;
-
-  if (isMiles) distance /= 1.60934;
-
-  return distance;
-}
-
-
-export function HashCode(string) {
-  var hash = 0, i, chr, len;
-  if (string.length === 0) return hash;
-  for (i = 0, len = string.length; i < len; i++) {
-    chr   = string.charCodeAt(i);
-    hash  = ((hash << 5) - hash) + chr;
-    hash |= 0; // Convert to 32bit integer
-  }
-  return Math.abs(hash);
+  let km = 12742 * Math.asin(Math.sqrt(a)) // 2 * R; R = 6371 km
+	return km/1.609
 }
 
 /**

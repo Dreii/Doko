@@ -13,17 +13,8 @@ module.exports = {
     googleUserID: {type: String, default:''},
     socketID: {type: String, default: ''},
     subscriptions: [{type: Schema.Types.ObjectId, ref: 'Room'}],
-    lastLocation:{
-      type: {
-        type: String, // Don't do `{ location: { type: String } }`
-        enum: ['Point'], // 'location.type' must be 'Point'
-        default: 'Point'
-      },
-      coordinates: {
-        type: [Number],
-        default: [0,0]
-      },
-    },
+    lastLocation:[Number],
+    color: {type: String, default: ''},
     online: {type: Boolean, default: false},
     created_at: {type: Date},
     updated_at: {type: Date}

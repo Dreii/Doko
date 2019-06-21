@@ -12,7 +12,6 @@ class DatabaseController{
     require("fs").readdirSync(normalizedPath).forEach((file) => {
       let rawData = require('./schemas/' + file)
       this.models[rawData.name] = rawData.model
-      console.log(rawData.name)
       this.schemas[rawData.name] = generateSchema(rawData.name, rawData.model, rawData.indexes)
     })
 

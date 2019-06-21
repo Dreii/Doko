@@ -46,10 +46,6 @@ export default class ImageTools {
             };
         }
 
-        let maxWidth  = maxDimensions.width;
-        let maxHeight = maxDimensions.height;
-
-        console.log(file.type, file.type.match(/image.*/))
         if (!ImageTools.isSupported() || !file.type.match(/image.*/)) {
             callback(file, false);
             return false;

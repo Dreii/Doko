@@ -24,14 +24,13 @@ module.exports = (app) => {
       })
     ))
     .then(user => {
-      console.log(user)
       var token = app.jwt.sign({ _id: user._id, email: user.email, password: user.password }, process.env.JWT_SECRET, {
         expiresIn: 86400 // expires in 24 hours
       })
       res.json({message: "success", token, user})
     })
     .catch((error) => {
-      console.log(error)
+      console.error(error)
       res.status(401).send({ error: error.message })
     })
   })

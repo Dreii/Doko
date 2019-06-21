@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 
 module.exports = (modelName, modelObject, modelIndexes, ...middleware) => {
-  const Schema = mongoose.Schema,
-      ObjectId = Schema.ObjectId
+  const Schema = mongoose.Schema
 
   const NewSchema = new Schema(modelObject)
 

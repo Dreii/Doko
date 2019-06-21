@@ -49,7 +49,7 @@ app.set("port", process.env.PORT || 3001)
 //Set defaults for error handling.
 process.on('unhandledRejection', error => {
   // Will print "unhandledRejection err is not defined"
-  console.log('unhandledRejection', error)
+  console.error('unhandledRejection', error)
 })
 
 app.closeDBs = ()=>require('./stopDBs')([app.users, app.rooms, app.messages])

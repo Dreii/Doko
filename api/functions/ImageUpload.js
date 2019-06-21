@@ -26,8 +26,8 @@ ImageUpload.delete = (Key)=>{
     Key
   }, (err, data) => {
     if(err){
-      console.log(err, data)
-      
+      console.error(err, data)
+
     }
   })
 }

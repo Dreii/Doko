@@ -1,5 +1,5 @@
 import io from 'socket.io-client'
-const socketUrl = `http://${window.location.hostname}:3231`
+const socketUrl = `https://${window.location.hostname}:3231`
 let baseUrl = ``
 
 class API{
@@ -24,8 +24,9 @@ class API{
 
   static ConnectSocket = (user) => {
     return new Promise((resolve, reject) => {
-      console.log("attempting connection")
-      const socket = io(socketUrl)
+
+      const socket = io(socketUrl, {rejectUnauthorized: false})
+
       socket.on('connect', ()=>{
         socket.emit('USER_CONNECTED', user._id)
         resolve(socket)
@@ -37,16 +38,15 @@ class API{
     })
   }
 
-  static RequestRooms(socket, userLoc, searchLoc, zoom, downloaded, lastDownloadTime){
-    console.log({socket, userLoc, searchLoc, zoom, downloaded})
+  static RequestRooms(socket, userID, searchLoc, zoom, downloaded, lastDownloadTime){
     return new Promise((resolve, reject) => {
-      socket.emit('CLIENT_REQUESTING_ROOM_DATA', userLoc, searchLoc, zoom, downloaded, lastDownloadTime)
+      socket.emit('CLIENT_SEARCHING_AREA', userID, searchLoc, zoom, downloaded, lastDownloadTime)
       socket.on('SERVER_SENDING_ROOM_DATA', (roomData) => {
         resolve(roomData)
       })
 
       socket.on('SERVER_ERROR_GETTING_ROOM_DATA', (err)=> {
-        console.log(err)
+        console.error(err)
         reject(err)
       })
     })
@@ -58,12 +58,9 @@ class API{
     return promise
       .then(response => {
         if(response.status === 500) throw Error('Server Error please try again')
-        console.log(response)
-        // if(response.status === 401) throw Error('Unauthorized')
         return response.json()
       })
       .then((body) => {
-        console.log(body)
         if(body.error) throw Error(body.error)
         return body
       })

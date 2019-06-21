@@ -1,9 +1,7 @@
 module.exports = (app) => {
   app.post("/signup", (req, res) => {
-    console.log(req.body)
     return app.db.functions.verify(req.body.email)
     .then(user => {
-      console.log("verified", user)
       if(user){
         throw new Error("User already exists.")
       }else{
@@ -14,7 +12,6 @@ module.exports = (app) => {
       }
     })
     .then((user) => {
-      console.log("created", user)
       var token = app.jwt.sign({ _id: user._id, email: user.email, password: user.password }, process.env.JWT_SECRET, {
         expiresIn: 86400 // expires in 24 hours
       })

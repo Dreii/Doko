@@ -31,7 +31,7 @@ module.exports = (app) => {
       res.json({message: "success", token, user})
     })
     .catch((error) => {
-      console.log(error)
+      console.error(error)
       res.status(401).json({ error: error.message })
     })
   })

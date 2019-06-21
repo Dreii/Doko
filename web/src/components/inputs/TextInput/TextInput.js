@@ -1,7 +1,7 @@
 import React from 'react'
 import './TextInput.css'
 
-const TextInput = ({id, className, name, value, type, placeholder, onChange, color, onBlur, style}) => (
+const TextInput = ({id, className, name, value, type, placeholder, onChange, color, onBlur, style, disabled}) => (
   <input
     id={id}
     className={`TextInput ${className}`}
@@ -12,6 +12,7 @@ const TextInput = ({id, className, name, value, type, placeholder, onChange, col
     value={value}
     onBlur={onBlur}
     style={style}
+    disabled={disabled}
   />
 )
 

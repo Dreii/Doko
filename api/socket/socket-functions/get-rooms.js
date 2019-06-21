@@ -1,5 +1,3 @@
-const CalcDistance = require('../../functions/helpers').CalcDistance
-
 /**
  * [Connect a user to the socket controller]
  * @param  {[SocketObject]} socket [Incomming Socket]
@@ -10,47 +8,58 @@ const CalcDistance = require('../../functions/helpers').CalcDistance
  * @param  {[Date]} lastDownloadTime [Date Time object used to search for only new chat messages]
  */
 
-module.exports = async function ConnectUser(socket, db, userID, searchLoc, zoom, alreadyDownloaded, lastDownloadTime){
+module.exports = async function GetRooms(socket, db, userID, searchLoc, zoom, alreadyDownloaded, lastDownloadTime){
   try{
-    console.log(socket.id)
-
+    //Find the user data for the user making this request and adjust their last search location.
     let user = await db.schemas.User.findOneAndUpdate({_id: userID}, {
-      lastLocation:{
-        type: 'Point', coordinates: [searchLoc.longitude, searchLoc.latitude]
-      }
+      lastLocation: [searchLoc.longitude, searchLoc.latitude]
     })
-    .select('subscriptions')
 
+    //find all rooms near the area being searched that are not already downloaded.
     let rooms = await db.schemas.Room.find({
       $and:[
         {_id: {$nin: alreadyDownloaded}},
-        {$or:[
-          {creator: {$eq: user._id}},
-          {_id: {$in: user.subscriptions}},
-          {location: {$geoWithin: {$center: [[ searchLoc.longitude, searchLoc.latitude ], (2*((15-zoom)+1))/111.12]}}}
-        ]}
+        {location: {$geoWithin: {$center: [[ searchLoc.longitude, searchLoc.latitude ], (2*((15-zoom)+1))/111.12]}}}
       ]
-    }).populate('creator')
+    })
+    //populate messages, and in each message populate the senders name and image.
+    .populate({
+      path: 'messages',
+      populate: {
+        path: 'sender',
+        model: 'User',
+        select: 'name image'
+      }
+    })
+    //populate the creator object, its name image and random color.
+    .populate({
+      path: 'creator',
+      select: 'name image color'
+    })
+    //populate the members array, grabbing the name and image from each user within.
+    .populate({
+      path: 'members',
+      select: 'name image'
+    })
 
-    let roomIDs = rooms.map(room => room._id)
+    rooms.forEach(room => {
+      //format the members section to only send the length and the last 3 entries.
+      room.membersCount = room.members.length
+      if(room.membersCount > 3) room.members = room.members.slice(room.membersCount-3)
 
-    let messageQuery = {
-      $and: [
-        {$or:[
-          {room: {$in: roomIDs}},
-          {room: {$in: alreadyDownloaded}}
-        ]},
-        lastDownloadTime ? {created_at: {$gt: lastDownloadTime}}:{_id:{$exists: true}}
-      ]
-    }
+      //set whether or not this room is pinned by the requesting user,
+      room.pinned = (user.subscriptions.includes(room._id))
 
-    let messages = await db.schemas.Message.find(messageQuery)
-    .sort([['created_at', -1]])
-    .populate('sender', 'name image')
+      //and whether or not this room is created by the requesting user.
+      room.ownedByUser = (room.creator._id.toString() === user._id.toString())
+    })
 
-    socket.emit('SERVER_SENDING_ROOM_DATA', rooms, messages)
+
+    //send the data to the requesting client.
+    socket.emit('SERVER_SENDING_ROOM_DATA', rooms)
   }catch(err){
-    console.log(err)
+    //error out on error.
+    console.error("error grabbing rooms", err)
     socket.emit('SERVER_ERROR_GETTING_ROOM_DATA', err)
   }
 }

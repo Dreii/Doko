@@ -5,8 +5,8 @@
  */
 
 module.exports = async function(socket, db, userID, roomData){
-  console.log(userID, roomData)
 
+  //create a new room instance in the rooms collection,
   let newRoom = new db.schemas.Room({
     location: [
       roomData.coords.longitude,
@@ -16,28 +16,26 @@ module.exports = async function(socket, db, userID, roomData){
     creator: userID,
     created_at: new Date()
   })
-
   newRoom = await newRoom.save()
-  newRoom.creator = await db.schemas.User.findOne({_id: newRoom.creator}, 'name image')
 
+  //find the creators information.
+  newRoom.creator = await db.schemas.User.findOne({_id: userID}, 'name image color')
+
+  //find a list of users who are online and last searched near this new rooms location.
   let usersSockets = await db.schemas.User.find({
     $and:[
       {online: true},
-      {_id: {$ne: userID}},
-      {lastLocation: {$ne: { type: "Point",  coordinates: [ 0, 0 ] }}},
-      {
-        lastLocation: {
-          $near: {
-            $geometry: { type: "Point",  coordinates: [ newRoom.location[0], newRoom.location[1] ] },
-            $maxDistance: 100000
-          }
-        }
-      }
+      {_id: {$ne:userID}},
+      {lastLocation: {$ne: [0, 0]}},
+      {lastLocation: {$geoWithin: {$center: [[ roomData.coords.longitude, roomData.coords.latitude ], 10000]}}}
     ]
   }, 'socketID').exec()
 
-  socket.emit('ROOM_CREATED', [newRoom])
+  //emit a room created event to the creator,
+  socket.emit('ROOM_CREATED', newRoom)
+
+  //and new room data to each client nearby.
   usersSockets.forEach(user => {
-    this.io.sockets.in(user.socketID).emit("SERVER_SENDING_ROOM_DATA", [newRoom], [])
+    this.io.sockets.in(user.socketID).emit("SERVER_SENDING_ROOM_DATA", [newRoom])
   })
 }

@@ -1,11 +1,13 @@
 module.exports = app => {
   app.post('/user-update', async function(req, res){
-    console.log(req.body)
     try{
       if(!req.body.auth) return res.status(404).send("Not Authorized")
 
       let decoded = app.jwt.verify(req.body.auth, process.env.JWT_SECRET)
+      
       let old = await app.db.schemas.User.findOne({_id: decoded._id}).lean()
+
+      if(app.db.functions.verify(req.body.user.email)) return res.status(401).send("Email already in use!")
 
       let password = req.body.user.password ? app.bcrypt.hashSync(req.body.user.password, 8) : old.password
 
@@ -16,10 +18,9 @@ module.exports = app => {
         expiresIn: 86400 // expires in 24 hours
       })
 
-      console.log(user)
       res.status(200).json({msg: "user updated", token, user})
     }catch(err){
-      console.log(err)
+      console.error(err)
       res.status(500).json(err.message)
     }
   })

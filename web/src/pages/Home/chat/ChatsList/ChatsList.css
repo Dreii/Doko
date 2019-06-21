@@ -1,0 +1,203 @@
+.chats{
+  height: 164px;
+  width: 100vw;
+  position: absolute;
+  bottom: 0;
+  overflow-x: auto;
+  display: flex;
+  transition: bottom 0.3s ease-out, opacity 0.3s ease-out;
+  z-index: 1000000;
+  overflow: -moz-scrollbars-none;
+  -ms-overflow-style: none;
+
+  background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 1))
+}
+.chats::-webkit-scrollbar { width: 0 !important }
+
+.chats.hide{
+  bottom: -158px;
+  opacity: 0;
+}
+
+.chat{
+  position: relative;
+  width: 308px;
+  flex: 0 0 308px;
+  height: 128px;
+
+  border-radius: 6px;
+  box-shadow: 0 0 0 white;
+  border: 3px solid #707070;
+  background: white;
+  padding-top: 8px;
+  margin: 8px 32px;
+
+  cursor: pointer;
+
+  transition: all 0.3s ease-out;
+}
+
+.chat.active{transform: translate(-6px, -6px);}
+
+.chat.active.red{border: 3px solid #FFA3A2; box-shadow: 6px 6px 3px rgba(255, 163, 162, 0.5), 2px 2px 0 #FFA3A2;}
+.chat.active.green{border: 3px solid #55EFC4; box-shadow: 6px 6px 3px rgba(131, 248, 216, 0.5), 2px 2px 0 #55EFC4;}
+.chat.active.pink{border: 3px solid #F57DB7; box-shadow: 6px 6px 3px rgba(248, 115, 180, 0.5), 2px 2px 0 #F57DB7;}
+.chat.active.yellow{border: 3px solid #FDCB6E; box-shadow: 6px 6px 3px rgba(255, 205, 111, 0.5), 2px 2px 0 #FDCB6E;}
+.chat.active.owner{border: 3px solid #0984E3; box-shadow: 6px 6px 3px rgba(65, 169, 248, 0.5), 2px 2px 0 #FDCB6E;}
+
+.chat.red{border: 3px solid #E8BCBB;}
+.chat.green{border: 3px solid #ABDED0;}
+.chat.pink{border: 3px solid #EABDD3;}
+.chat.yellow{border: 3px solid #EFD7AB;}
+.chat.owner{border: 3px solid #80BFEE;}
+
+.chat .title{
+  font-size: 20px;
+  text-transform: capitalize;
+  margin: 0;
+  padding: 0 16px;
+}
+
+.chat.red.active .title{color: #FFA3A2;}
+.chat.green.active .title{color: #55EFC4;}
+.chat.pink.active .title{color: #F57DB7;}
+.chat.yellow.active .title{color: #FDCB6E;}
+.chat.owner.active .title{color: #0984E3;}
+
+.chat.red .title{color: #E8BCBB}
+.chat.green .title{color: #ABDED0}
+.chat.pink .title{color: #EABDD3}
+.chat.yellow .title{color: #EFD7AB}
+.chat.owner .title{color: #80BFEE}
+
+.chat .chat-info{
+  display: flex;
+  width: 100%;
+  align-items: flex-end;
+  justify-content: space-between;
+  position: absolute;
+  bottom: 0;
+  padding: 8px;
+}
+
+.chat .distance{
+  position: relative;
+  display: inline-block;
+  bottom: 4px;
+  left: 4px;
+  margin: 0;
+  font-size: 18px;
+  font-weight: bolder;
+  color: #C1C1C1;
+  margin-right: 20px;
+}
+
+.chat .distance::after{
+  content:'';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 70%;
+  height: 3px;
+  background: #C1C1C1;
+}
+
+.chat .member-list{
+  width: 215px;
+  display: inline-flex;
+  justify-content: flex-end;
+  position: absolute;
+  right: 0;
+}
+
+.chat .creator-profile{
+  border: 2px solid gray;
+  margin-right: 8px;
+  /* position: absolute; */
+  display: inline-block;
+}
+
+.chat.red.active .creator-profile{border-color: #FFA3A2;}
+.chat.green.active .creator-profile{border-color: #55EFC4;}
+.chat.pink.active .creator-profile{border-color: #F57DB7;}
+.chat.yellow.active .creator-profile{border-color: #FDCB6E;}
+.chat.owner.active .creator-profile{border-color: #0984E3;}
+
+.chat.red .creator-profile{border-color: #E8BCBB}
+.chat.green .creator-profile{border-color: #ABDED0}
+.chat.pink .creator-profile{border-color: #EABDD3}
+.chat.yellow .creator-profile{border-color: #EFD7AB}
+.chat.owner .creator-profile{border-color: #80BFEE}
+
+.chat .member-count{
+  width: 48px;
+  height: 48px;
+  background-color: gray;
+  font-size: 16px;
+  color: white;
+  border-radius: 100%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: -6px;
+}
+
+.chat.red.active .member-count{background-color: #FFA3A2;}
+.chat.green.active .member-count{background-color: #55EFC4;}
+.chat.pink.active .member-count{background-color: #F57DB7;}
+.chat.yellow.active .member-count{background-color: #FDCB6E;}
+.chat.owner.active .member-count{background-color: #0984E3;}
+
+.chat.red .member-count{background-color: #E8BCBB}
+.chat.green .member-count{background-color: #ABDED0}
+.chat.pink .member-count{background-color: #EABDD3}
+.chat.yellow .member-count{background-color: #EFD7AB}
+.chat.owner .member-count{background-color: #80BFEE}
+
+.chat .member-listing{
+  margin-right: -18px;
+  border: 2px solid white;
+}
+
+.chat .member-listing:last-of-type{
+  margin-right: 8px;
+}
+
+.chat .creator-profile, .chat .member-listing, .chat .member-count{
+  flex-basis: 48px;
+  width: 48px;
+}
+
+.chat .subscription-button{
+  margin: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 42px;
+  height: 42px;
+}
+
+.chat .subscription-button svg{
+  width: 80%;
+  height: 80%;
+  fill: #b6b6b6;
+  transition: fill 0.3s ease-in;
+}
+
+.chat.red .subscription-button:hover svg{fill: #FFA3A2;}
+.chat.green .subscription-button:hover svg{fill: #55EFC4;}
+.chat.pink .subscription-button:hover svg{fill: #F57DB7;}
+.chat.yellow .subscription-button:hover svg{fill: #FDCB6E;}
+.chat.owner .subscription-button:hover svg{fill: #0984E3;}
+
+.chat.red .subscription-button.pinned svg{fill: #E8BCBB;}
+.chat.green .subscription-button.pinned svg{fill: #ABDED0;}
+.chat.pink .subscription-button.pinned svg{fill: #EABDD3;}
+.chat.yellow .subscription-button.pinned svg{fill: #EFD7AB;}
+.chat.owner .subscription-button.pinned svg{fill: #80BFEE;}
+
+.chat.red.active .subscription-button.pinned svg{fill: #FFA3A2;}
+.chat.green.active .subscription-button.pinned svg{fill: #55EFC4;}
+.chat.pink.active .subscription-button.pinned svg{fill: #F57DB7;}
+.chat.yellow.active .subscription-button.pinned svg{fill: #FDCB6E;}
+.chat.owner.active .subscription-button.pinned svg{fill: #0984E3;}

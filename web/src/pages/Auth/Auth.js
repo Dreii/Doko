@@ -27,10 +27,10 @@ class Auth extends Component {
     lastName: "", // Holds input for the last name field.
     image: "", // Holds URL of profile image once set.
     error: "", // Error string to be displayed.
-    errorShowing: false, //Wether the error should display or not.
+    errorShowing: false, //whether the error should display or not.
     errorLevel: 0, //The intensity of the error, 0 for message, 1 for warning, 2 for error.
     formTarget: "", //Target for success and loading states on the form
-    formLoading: false, //wether or not to show a loading state on target form button
+    formLoading: false, //whether or not to show a loading state on target form button
   }
 
   //Validates login form, and sends a login request to the server,
@@ -48,7 +48,6 @@ class Auth extends Component {
   }
 
   HandleFacebookLogin = (data) => {
-    console.log(data)
     if(!data || !data.accessToken) return this.SetError('Facebook authentication denied', 1)
     let filteredData = {accessToken: data.accessToken, userID: data.userID, email: data.email, name: data.name, imageURL: data.picture.data.url}
 
@@ -68,7 +67,7 @@ class Auth extends Component {
       this.props.SetAuth(res.token, res.user)
     })
     .catch(error => {
-      console.log(error)
+      console.error(error)
       this.SetError(error.message, 1)}
     )
   }
@@ -135,7 +134,7 @@ class Auth extends Component {
     //make sure there are no blank fields on the Signup page and that the password confirm field is the same as password.
     //Also make sure that passwords are at least 5 characters long and contain letters and numbers.
     if(page === "signup" && (email === "" || password === "" || passwordConfirm === "")) return this.SetError("Fields cannot be blank", 0)
-    if(page === "signup" && email.match(/^\S+@\S+[\.][0-9a-z]+$/) === null) return this.SetError("Invalid email", 0)
+    if(page === "signup" && email.match(/^\S+@\S+[.][0-9a-z]+$/) === null) return this.SetError("Invalid email", 0)
     if(page === "signup" && password !== passwordConfirm) return this.SetError("Passwords dont match", 0)
     if(page === "signup" && password.length < 4) return this.SetError("Password too short", 0)
     if(page === "signup" && password.match(/([0-9].*[a-zA-Z])|([a-zA-Z].*[0-9])/) === null) return this.SetError("Password needs letters and numbers", 0)
@@ -211,7 +210,7 @@ class Auth extends Component {
             HandleLogin={this.HandleLogin}
             HandleFacebookClick={() => {this.SetLoading(true, "fb-login")}}
             HandleFacebookLogin={this.HandleFacebookLogin}
-            HandleGoogleClick={() => {console.log("g -loading"); this.SetLoading(true, "g-login")}}
+            HandleGoogleClick={() => this.SetLoading(true, "g-login")}
             HandleGoogleLogin={this.HandleGoogleLogin}
             ChangePage={this.ChangePage}
             HandleError={this.SetError}

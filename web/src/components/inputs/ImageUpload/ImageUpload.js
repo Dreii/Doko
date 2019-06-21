@@ -18,7 +18,7 @@ import API from '../../../functions/api'
 class ImageUpload extends Component {
 
   state = {
-    uploading: false, //wether or not this component is currently uploading (shows loading spinner and stops new uploads)
+    uploading: false, //whether or not this component is currently uploading (shows loading spinner and stops new uploads)
     image: null, //the image thats been uploaded or null
   }
 

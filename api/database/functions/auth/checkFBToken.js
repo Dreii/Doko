@@ -32,7 +32,7 @@ module.exports = (token) => new Promise((resolve, reject) =>{
       }
     })
   }).on('error', (e) => {
-    console.log('error', e)
+    console.error('error', e)
     return reject(e)
   })
 })

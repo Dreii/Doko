@@ -17,7 +17,7 @@ module.exports = (app) => {
       }
     })
     .catch((error) => {
-      console.log(error)
+      console.error(error)
       res.status(401).send({ error: error.message })
     })
   })

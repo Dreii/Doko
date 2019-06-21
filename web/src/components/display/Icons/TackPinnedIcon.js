@@ -3,14 +3,14 @@ import React from 'react'
 import './Icons.css'
 
 const TackIcon = ({color, className}) => (
-  <svg className={`svg-icon ${className}`} xmlns="http://www.w3.org/2000/svg" width="15.429" height="16.286" viewBox="0 0 15.429 16.286">
-    <g id="tack-pinned" transform="translate(0 -6)">
-      <g id="Group_74" data-name="Group 74" transform="translate(0 6)">
+  <svg className={`svg-icon ${className}`} xmlns="http://www.w3.org/2000/svg" width="19.255" height="20.325" viewBox="0 0 19.255 20.325">
+    <g id="tack" transform="translate(0 0)">
+      <g id="Group_74" data-name="Group 74" transform="translate(0 0)">
         <g id="Group_73" data-name="Group 73">
-          <path id="Path_14" data-name="Path 14" d="M172,179.687v-3.879h.857a.857.857,0,0,0,.857-.857v-3.429a.857.857,0,0,0-.857-.857H162.571a.857.857,0,0,0-.857.857v3.429a.857.857,0,0,0,.857.857h.857v3.879A7.741,7.741,0,0,0,160,186.094a.857.857,0,0,0,.857.857h13.714a.857.857,0,0,0,.857-.857A7.741,7.741,0,0,0,172,179.687Zm-10.223,5.55a6.03,6.03,0,0,1,2.937-4.334.857.857,0,0,0,.429-.741v-5.211a.857.857,0,0,0-.857-.857h-.857v-1.714H172v1.714h-.857a.857.857,0,0,0-.857.857v5.211a.857.857,0,0,0,.429.741,6.03,6.03,0,0,1,2.937,4.334H161.777Z" transform="translate(-160 -170.665)" fill={color} />
+          <path id="Path_14" data-name="Path 14" d="M174.976,181.924v-4.84h1.07a1.07,1.07,0,0,0,1.07-1.07v-4.279a1.07,1.07,0,0,0-1.07-1.07H163.209a1.07,1.07,0,0,0-1.07,1.07v4.279a1.07,1.07,0,0,0,1.07,1.07h1.07v4.84a9.661,9.661,0,0,0-4.279,8,1.07,1.07,0,0,0,1.07,1.07h17.115a1.07,1.07,0,0,0,1.07-1.07A9.661,9.661,0,0,0,174.976,181.924Zm-12.758,6.926a7.525,7.525,0,0,1,3.666-5.409,1.07,1.07,0,0,0,.535-.925v-6.5a1.07,1.07,0,0,0-1.07-1.07h-1.07V172.8h10.7v2.139h-1.07a1.07,1.07,0,0,0-1.07,1.07v6.5a1.07,1.07,0,0,0,.535.925,7.526,7.526,0,0,1,3.666,5.409h-14.82Z" transform="translate(-160 -170.665)" fill={color}/>
         </g>
       </g>
-      <rect id="Rectangle_59" data-name="Rectangle 59" width="4.339" height="1.688" rx="0.844" transform="translate(2.759 9.402)" fill={color} />
+      <rect id="Rectangle_59" data-name="Rectangle 59" width="5.415" height="2.106" rx="1.053" transform="translate(3.443 4.246)" fill={color}/>
     </g>
   </svg>
 
