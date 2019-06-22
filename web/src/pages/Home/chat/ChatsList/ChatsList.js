@@ -7,13 +7,13 @@ class ChatsList extends Component {
 
   componentDidUpdate(prevProps){
     let {selectedRoomIndex} = this.props
-    if(prevProps.selectedRoomIndex !== selectedRoomIndex && this.props.windowWidth < 512){
+    if(prevProps.selectedRoomIndex !== selectedRoomIndex){
       this.chats.scrollLeft = (selectedRoomIndex*(308+64))
     }
   }
 
   ChatClick = (room, i) => {
-    room.selected ? this.props.OpenRoom(room):this.props.SelectRoom(room._id, {dontScroll: true})
+    room.selected ? this.props.OpenRoom(room):this.props.SelectRoom(room._id)
   }
 
   DisplayRooms = () => {
@@ -21,18 +21,17 @@ class ChatsList extends Component {
     if(filteredRooms)
     return filteredRooms.map((room, i) => {
       return (
-        <ChatSelector
-          key={room._id}
-          room={room}
-          selected={room.selected}
-          pinned={room.pinned}
-          index={i}
-          members={room.members}
-          membersCount={room.membersCount}
+          <ChatSelector
+            room={room}
+            selected={room.selected}
+            pinned={room.pinned}
+            index={i}
+            members={room.members}
+            membersCount={room.membersCount}
 
-          ChatClick={this.ChatClick}
-          PinRoom={PinRoom}
-        />
+            ChatClick={this.ChatClick}
+            PinRoom={PinRoom}
+          />
       )
     })
   }

@@ -1,6 +1,6 @@
 import io from 'socket.io-client'
-const socketUrl = process.env.SOCKETURL
-let baseUrl = process.env.APIURL
+const socketUrl = process.env.REACT_APP_SOCKETURL
+let baseUrl = ''//process.env.REACT_APP_APIURL
 
 class API{
   static SendPost(endpoint, body){
