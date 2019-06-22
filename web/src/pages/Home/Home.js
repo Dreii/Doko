@@ -43,16 +43,21 @@ class Home extends Component {
     errorShowing: false,
     socket: null,
     placingRoom: false,
-    newRoomName: ""
+    newRoomName: "",
+    windowWidth: window.innerWidth
   }
 
   //when the component is mounted we begin by getting all of the data and connections
   //in that we need in place.
   componentDidMount(){
+    //ad a listener to capture window width for certain UI elements.
+    window.addEventListener('resize', this.ResizeHandler)
+
     this.InitiateApp()
   }
 
-
+  //clena up listeners on unmount
+  componentWillUnmount(){window.removeEventListener('resize', this.ResizeHandler)}
 
 
   InitiateApp = async () => {
@@ -97,8 +102,6 @@ class Home extends Component {
   //coordinate, and for any rooms we created or subscribed to.
   SearchForNewRooms = async (socket, pos, zoom) => {
 
-    console.log(pos)
-
     //note down the last location that weve searched from.
     this.setState({lastSearchedLocation: pos})
 
@@ -117,6 +120,8 @@ class Home extends Component {
   }
 
 
+  //Capture window width on resize.
+  ResizeHandler = (e) => {this.setState({windowX: window.innerWidth})}
 
 
   //function to let the rest of the app know when all of our data is ready.
@@ -162,7 +167,6 @@ class Home extends Component {
 
   //Function to select a room from the dataset.
   SelectRoom = (selectedRoom, options) => {
-    console.log(selectedRoom, options)
 
     let {rooms, moveCoordinates} = this.state
 
@@ -214,7 +218,6 @@ class Home extends Component {
   //Pin or unpin a room for the user, adding/removing it from the pinned list on the client and
   //sending a socket request to do the same on the server.
   PinRoom = (roomID) => {
-    console.log("PinRoom", roomID)
     let {rooms, pinnedRooms, socket} = this.state
 
     //map through all rooms,
@@ -269,7 +272,7 @@ class Home extends Component {
           userPosition, menuOpen, filteredRooms,
           selectedRoomIndex, openedRoom, chatValue, placingRoom,
           error, errorLevel, errorShowing, dataReady, socket, moveCoordinates,
-          pinnedRooms, createdRooms, mapReady
+          pinnedRooms, createdRooms, mapReady, windowWidth
         } = this.state
 
     return (
@@ -295,6 +298,7 @@ class Home extends Component {
           open={menuOpen} //whether the menu is open or closed.
           hide={placingRoom || openedRoom!==null || !dataReady || !mapReady} //whether or not to hide the menu.
           SetMenuOpen={this.ToggleMainMenu} //set the menu open or closed.
+          windowWidth={windowWidth}
 
           //authentication and profile data.
           auth={auth} //global auth token for sending a receiving secure requests to the server.
@@ -330,6 +334,7 @@ class Home extends Component {
           //the main menu is open, data is not ready, the map is not ready,
           //or a room is open in the Chatroom component.
           hide={!filteredRooms || placingRoom || menuOpen|| !dataReady || !mapReady || openedRoom !== null}
+          windowWidth={windowWidth}
 
           //user data
           userID={user._id} //the id of the current user, used to determine which rooms are owned by the current user.

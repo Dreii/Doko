@@ -1,7 +1,6 @@
 import API from '../../../functions/api'
 import HandleNewRooms from './HandleNewRooms'
 import HandleNewMessage from './HandleNewMessage'
-import FilterRooms from './FilterRooms'
 
 //This function aquires a socket from the server and then opens up listeners for it.
 export default function HandleSocket(){
@@ -13,8 +12,6 @@ export default function HandleSocket(){
     //When the server is sending new rooms we need to
     //format them for display on the client, and add them to the proper lists.
     socket.on('SERVER_SENDING_ROOM_DATA', (newRooms) => {
-      console.log("SERVER_SENDING_ROOM_DATA", newRooms)
-
       HandleNewRooms.call(this, newRooms)
     })
 
@@ -31,7 +28,6 @@ export default function HandleSocket(){
 
     //when a new room is created, we add it to our created rooms and afterwards we open it.
     socket.on('ROOM_CREATED', (newRoom) => {
-      console.log("ROOM_CREATED", newRoom)
       let {createdRooms} = this.state
 
       //set the new room as owned by user, then add it to created rooms.
@@ -51,7 +47,6 @@ export default function HandleSocket(){
 
     //tbd...
     socket.on('ROOM_DELETED', roomID => {
-      console.log("ROOM_DELETED", roomID)
       let {rooms, filteredRooms, createdRooms, pinnedRooms, openedRoom} = this.state
 
       //if this room is currently open, close it.

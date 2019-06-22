@@ -13,7 +13,7 @@ class Chatroom extends Component {
   }
 
   render() {
-    let {user, socket, chatroom, value, SetValue, CloseRoom, PinRoom} = this.props
+    let {user, socket, chatroom, value, SetValue, CloseRoom} = this.props
 
     return (
       <div className={`chat-room ${chatroom ? "open" : ""} ${chatroom ? (chatroom.ownedByUser ? "owner" : chatroom.creator.color):""}`}>

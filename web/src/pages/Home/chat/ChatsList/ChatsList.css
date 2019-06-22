@@ -35,7 +35,11 @@
   cursor: pointer;
 
   transition: all 0.3s ease-out;
+  opacity: 0;
+  animation: fade-in 0.6s ease-in forwards;
 }
+
+@keyframes fade-in{0%{opacity: 0;}100%{opacity: 1;}}
 
 .chat.active{transform: translate(-6px, -6px);}
 

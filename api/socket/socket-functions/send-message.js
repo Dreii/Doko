@@ -53,8 +53,6 @@ module.exports = async function(db, userID, roomID, roomColor, fromOwner, messag
   .populate('members')
   room.membersCount = room.members.length
 
-  console.log(newMessage, room.location)
-
   //find all users near this rooms point and send them this message.
   let usersSockets = await db.schemas.User.find({
     $and:[

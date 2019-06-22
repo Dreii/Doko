@@ -25,7 +25,6 @@ class HomeUI extends Component {
 
   state = {
     page: "add", //add||rooms||search||settings
-    windowX: window.innerWidth,
     addRoomTitle: "",
     searchLocation: "",
     searchRooms: "",
@@ -42,16 +41,13 @@ class HomeUI extends Component {
   }
 
   componentDidMount(){
-    window.addEventListener('resize', this.ResizeHandler)
     window.addEventListener('keyup', this.HandleEnterPressed)
   }
 
   componentWillUnmount(){
-    window.removeEventListener('resize', this.ResizeHandler)
     window.removeEventListener('keyup', this.HandleEnterPressed)
   }
 
-  ResizeHandler = (e) => {this.setState({windowX: window.innerWidth})}
 
   SwitchPage = (page) => this.setState({page})
 
@@ -72,8 +68,13 @@ class HomeUI extends Component {
     if(this.props.hide) return -70
     if(!this.props.open) return 16
 
-    let width = this.state.windowX-(52+64)
-    return (index*(width/3))+32
+    if(this.props.windowWidth > 750){
+      let width = this.props.windowWidth*0.3
+      return (index*(width/3))+width+28
+    }else{
+      let width = this.props.windowWidth-(52+64)
+      return (index*(width/3))+32
+    }
   }
 
   HandleEnterPressed = (e) => {

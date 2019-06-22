@@ -4,13 +4,11 @@ module.exports = (app) => {
   app.post("/search-location",
   require('../functions/CheckAuthToken')(app),
   (req, res) => {
-    console.log("got request")
     try{
       let endpoint = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(req.body.query)}&key=${process.env.GSEARCHKEY}`
       return fetch(endpoint)
       .then(response => response.json())
       .then(response => {
-        console.log(response)
         res.status(200).json(response)
       })
     }catch(e){

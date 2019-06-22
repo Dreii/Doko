@@ -64,7 +64,7 @@ class SocketController{
           UserDisconnected(db, socket)
         })
 
-        socket.on('error', (error) => console.log(error))
+        socket.on('error', (error) => console.error(error))
       })
 
       io.on('error', (error) => console.log(error))

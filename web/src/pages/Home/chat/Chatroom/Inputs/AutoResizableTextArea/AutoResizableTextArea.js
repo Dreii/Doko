@@ -25,11 +25,9 @@ class AutoResizableTextArea extends Component {
   }
 
   handleKeyDown(e){if(e.key === 'Shift') {
-    console.log("handle key down")
     this.setState({shiftPressed:true})}
   }
   handleKeyUp(e){
-    console.log("handle key up")
     if(this.props.value !== ""){
       if(e.key === 'Shift') this.setState({shiftPressed:false})
       if(e.key === 'Enter' && !this.state.shiftPressed && this.props.value.trim() !== ""){

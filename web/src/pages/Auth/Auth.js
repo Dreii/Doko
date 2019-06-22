@@ -151,7 +151,7 @@ class Auth extends Component {
   //Switch pages between login and signup
   ChangePage = (page) => page === "login" || page === "signup" || page === "profile" ? this.setState({page: page}) : this.SetError("Invalid Page.", 2)
 
-  //return xpos that the inner container should translate to; 0 for login, -100% for signup, -200% for Profile
+  //return xpos that the outer container should translate to; 0 for login, -100% for signup, -200% for Profile
   //this allows the ui to slide to the left and right when changing pages.
   GetPageXPos = (page) => page === "login" ? 0 : page === "signup" ? 100 : 200
 
@@ -199,8 +199,8 @@ class Auth extends Component {
       <div className="Auth">
         <img className="logo" src="/doko-logo.svg" alt="logo" />
         <Error error={error} level={errorLevel} show={errorShowing} />
-        {/* translate the inner-container X when page changes to slide UI around. */}
-        <div className="inner-container" style={{transform: `translateX(-${this.GetPageXPos(page)}vw)`}}>
+        {/* translate the outer-container X when page changes to slide UI around. */}
+        <div className="outer-container" style={{transform: `translateX(-${this.GetPageXPos(page)}vw)`}}>
 
           {/* Handles login inputs. */}
           <Login

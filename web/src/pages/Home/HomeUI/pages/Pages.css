@@ -2,7 +2,7 @@
   position: absolute;
   top: 0;
   padding: 32px;
-  padding-top: 108px;
+  padding-top: 148px;
   height: 100%;
   width: 100%;
   opacity: 0;
@@ -10,6 +10,8 @@
   overflow: hidden;
 
   padding-bottom: 128px;
+
+  max-width: 512px;
 }
 
 .home-ui-page-enter-done{

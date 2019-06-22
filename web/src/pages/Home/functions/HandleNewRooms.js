@@ -3,7 +3,7 @@ import FilterRooms from './FilterRooms'
 
 export default function HandleNewRooms(newRooms){
   //extract the neccesary data from state.
-  let {rooms, searchString, userPosition, selectedRoom, lastSearchedLocation} = this.state
+  let {rooms, searchString, userPosition, lastSearchedLocation} = this.state
 
   //If there are new rooms in the download,
   if(newRooms.length > 0){

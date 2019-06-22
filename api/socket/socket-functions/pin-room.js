@@ -14,7 +14,5 @@ module.exports = async function(db, userID, roomID, pinState){
     $pull: {subscriptions: roomID}
   }
 
-  console.log(update)
-
   await db.schemas.User.findOneAndUpdate({_id: userID}, update).exec()
 }

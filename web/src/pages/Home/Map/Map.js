@@ -30,7 +30,6 @@ class Map extends Component {
 
   //on mount we set a ref for our map gl element.
   componentDidMount(){
-    console.log(this.props)
     this.mapRef && this.setState({mapInstance: this.mapRef.getMap()})
   }
 
