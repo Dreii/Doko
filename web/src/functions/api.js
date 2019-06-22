@@ -1,6 +1,6 @@
 import io from 'socket.io-client'
-const socketUrl = `https://${window.location.hostname}:3231`
-let baseUrl = ``
+const socketUrl = process.env.SOCKETURL
+let baseUrl = process.env.APIURL
 
 class API{
   static SendPost(endpoint, body){
