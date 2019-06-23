@@ -21,7 +21,7 @@ app.use(app.bodyParser.json())
 app.use(app.bodyParser.urlencoded({
   extended: true
 }))
-app.use((error, req, res, next) => res.status(500).send(err))
+app.use((error, req, res, next) => res.status(500).send(error))
 
 //configure authentication tools
 app.jwt = require('jsonwebtoken')
