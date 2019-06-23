@@ -1,6 +1,18 @@
 const express = require("express")
 const app = express()
 
+const cors = require('cors')
+const whitelist = ['https://dokomap.io', 'https://www.dokomap.io', 'https://media.dokomap.io', 'https://api.dokomap.io']
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
+
 //Set how request body's are parsed.
 app.bodyParser = require('body-parser')
 app.use(app.bodyParser.json())

@@ -3,3 +3,4 @@
 .env
 *.cert
 *.key
+node_modules
