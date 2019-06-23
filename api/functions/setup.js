@@ -13,6 +13,8 @@ const corsOptions = {
   }
 }
 
+app.use(cors(corsOptions))
+
 //Set how request body's are parsed.
 app.bodyParser = require('body-parser')
 app.use(app.bodyParser.json())
