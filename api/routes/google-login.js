@@ -32,7 +32,7 @@ module.exports = (app) => {
     })
     .catch((error) => {
       console.error(error)
-      res.status(401).json({ error: error.message })
+      res.status(401).send({ error: error.message })
     })
   })
 }

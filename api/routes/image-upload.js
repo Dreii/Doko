@@ -19,6 +19,6 @@ module.exports = app => {
 
     await app.db.schemas.User.findOneAndUpdate({_id: req.res.locals.id}, {$set: {image: mediaCDN+req.file.key}})
 
-    return res.status(200).json({msg: "image uploaded", url: mediaCDN+req.file.key})
+    return res.status(200).send({msg: "image uploaded", url: mediaCDN+req.file.key})
   })
 }

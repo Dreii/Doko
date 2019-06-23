@@ -2,8 +2,8 @@ const fs = require('fs')
 let https = require('https')
 
 const serv = https.createServer({
-  key: fs.readFileSync('socket/server.key'),
-  cert: fs.readFileSync('socket/server.cert')
+  key: fs.readFileSync(process.env.SOCKET_SERVER_KEY),
+  cert: fs.readFileSync(process.env.SOCKET_SERVER_CERT)
 })
 
 const io = require('socket.io')(serv)
