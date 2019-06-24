@@ -68,7 +68,7 @@ class Auth extends Component {
     })
     .catch(error => {
       console.error(error)
-      this.SetError(error.message, 1)}
+      this.SetError(error.message, 2)}
     )
   }
 
@@ -104,7 +104,7 @@ class Auth extends Component {
       .then((res) => {
         this.props.SetAuth(res.auth, res.user)
       })
-      .catch(error => this.SetError(error.toString(), 1))
+      .catch(error => this.SetError(error.toString(), 2))
     }
   }
 

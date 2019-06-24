@@ -28,7 +28,7 @@ export default class ImageTools {
         if(types.every(type => file.type !== type))
           reject(`File type not supported`)
 
-        if (file.size > 150000)
+        if (file.size > 5000000)
           reject(`Image too large`)
 
         this.resize(file, maxDimensions, (file, processed) => {

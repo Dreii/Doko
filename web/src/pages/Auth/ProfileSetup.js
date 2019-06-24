@@ -10,7 +10,7 @@ const Profile = ({auth, image, SetImage, firstName, lastName, ChangeField, Handl
   return(
     <div className="profile-container">
       <div className="inner-container">
-        <ImageUpload auth={auth} image={image} endpoint='/user-image-upload' onSuccess={(data)=>SetImage(data.url)} onError={(err)=>HandleError(err)}/>
+        <ImageUpload auth={auth} image={image} endpoint='/user-image-upload' onSuccess={(data)=>SetImage(data.url)} onError={(err)=>HandleError(err, 2)}/>
 
         <TextInput value={firstName} placeholder="First Name" onChange={(e)=>ChangeField(e.target.value, "firstName")}/>
         <TextInput value={lastName} placeholder="Last Name" onChange={(e)=>ChangeField(e.target.value, "lastName")}/>
