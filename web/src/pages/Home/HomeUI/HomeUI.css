@@ -8,6 +8,7 @@
   position: absolute;
   z-index: 10000000;
   background: rgba(244, 252, 255, 0);
+  height: 100%;
 }
 
 .home-ui-button{
@@ -57,7 +58,7 @@
 .menu-page{
   position: absolute;
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   top: 0;
   left: 0;
   background: rgba(244, 252, 255, 0);
