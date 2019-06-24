@@ -26,6 +26,7 @@ const Login = ({
           appId={process.env.REACT_APP_FBAPPID}
           fields="name,email,picture.type(large)"
           callback={(data)=> HandleFacebookLogin(data)}
+          redirectUri={'https://dokomap.io'}
           onClick={HandleFacebookClick}
           render={renderProps => (
             <Button value="Facebook Login" primary loading={fbLoginLoading} icon="/facebook-icon.svg" className="facebook-login-button" onClick={renderProps.onClick} />
