@@ -26,6 +26,7 @@ class ChatsList extends Component {
             selected={room.selected}
             pinned={room.pinned}
             index={i}
+            key={room._id}
             members={room.members}
             membersCount={room.membersCount}
 

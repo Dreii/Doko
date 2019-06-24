@@ -64,10 +64,12 @@ class SocketController{
           UserDisconnected(db, socket)
         })
 
-        socket.on('error', (error) => console.error(error))
+        socket.on('error', (error) => {
+          console.log('SOCKET ERROR', error)
+        })
       })
 
-      io.on('error', (error) => console.log(error))
+      io.on('error', (error) => console.log('IO ERROR', error))
 
       serv.listen(this.PORT, ()=>{
         console.log("CONNECTED to port: "+this.PORT);

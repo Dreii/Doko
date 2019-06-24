@@ -57,10 +57,17 @@ class API{
   static handleResponse(promise){
     return promise
       .then(response => {
-        if(response.status === 500) throw Error('Server Error please try again')
-        return response.json()
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.indexOf("application/json") !== -1) {
+          return response.json()
+        } else {
+          return response.text().then(error => ({error}))
+        }
+        // if(response.status === 500) throw Error('Server Error please try again')
+        // return response.json()
       })
       .then((body) => {
+        console.log(body)
         if(body.error) throw Error(body.error)
         return body
       })
