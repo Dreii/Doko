@@ -5,9 +5,12 @@ const cors = require('cors')
 const whitelist = ['https://dokomap.io', 'https://www.dokomap.io', 'https://media.dokomap.io', 'https://api.dokomap.io']
 const corsOptions = {
   origin: function (origin, callback) {
+    if(!origin) return callback(null, true);
+
     if (whitelist.indexOf(origin) !== -1) {
       callback(null, true)
     } else {
+      console.log('Not allowed by CORS')
       callback(new Error('Not allowed by CORS'))
     }
   }
@@ -52,6 +55,7 @@ require('../routes/signup')(app)
 require('../routes/user-update')(app)
 require('../routes/image-upload')(app)
 require('../routes/search-location')(app)
+require('../routes/hello')(app)
 
 //setup Socket.
 app.io = require('../socket/socket-controller')
