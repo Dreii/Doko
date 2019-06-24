@@ -40,10 +40,29 @@
 
 .button.google-login-button{color: white; background: #FF7675; box-shadow: 3px 3px 6px rgba(255, 118, 117, .30);}
 .button.google-login-button:hover{box-shadow: 6px 6px 6px rgba(255, 118, 117, .10);}
+.google-login-button::before{
+  width: 32px;
+  height: 33px;
+  content: '';
+  background-image: url("/google-icon.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-sizing: border-box;
+}
 
+.facebook-login-button::before{
+  width: 20px;
+  height: 32px;
+  margin-right: 16px;
+  content: '';
+  background-image: url("/facebook-icon.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-sizing: border-box;
+}
 
-.button.login-toggle{color: #3486a4;}
-.button.signup-toggle{color: #3486a4;}
+.button.login-toggle{color: #116483;}
+.button.signup-toggle{color: #116483;}
 
 .city-background-display{
   position: absolute;

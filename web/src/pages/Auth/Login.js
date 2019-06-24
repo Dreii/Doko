@@ -1,7 +1,10 @@
 //refer to Auth.js for context on what this component does.
 
 import React from 'react'
-import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
+// import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
+
+import { FacebookLogin } from 'react-facebook-login-component';
+
 import GoogleLogin from 'react-google-login'
 
 import TextInput from '../../components/inputs/TextInput/TextInput'
@@ -22,7 +25,7 @@ const Login = ({
 
         <Button value="Log In" primary loading={loginLoading} onClick={HandleLogin} />
 
-        <FacebookLogin
+        {/* <FacebookLogin
           appId={process.env.REACT_APP_FBAPPID}
           fields="name,email,picture.type(large)"
           callback={(data)=> HandleFacebookLogin(data)}
@@ -31,6 +34,17 @@ const Login = ({
           render={renderProps => (
             <Button value="Facebook Login" primary loading={fbLoginLoading} icon="/facebook-icon.svg" className="facebook-login-button" onClick={renderProps.onClick} />
           )}
+        /> */}
+        <FacebookLogin
+          socialId={process.env.REACT_APP_FBAPPID}
+          language="en_US"
+          scope="public_profile,email"
+          responseHandler={(data)=> HandleFacebookLogin(data)}
+          // xfbml={true}
+          fields="name,email,picture.type(large)"
+          version="v2.5"
+          className="button value facebook-login-button"
+          buttonText="Login With Facebook"
         />
 
         <GoogleLogin
@@ -38,7 +52,7 @@ const Login = ({
           onSuccess={(data)=> HandleGoogleLogin(data)}
           onFailure={(err)=> HandleError(err.error, 2)}
           render={renderProps => (
-            <Button value="Google Login" primary loading={gLoginLoading} icon="/google-icon.svg" className="google-login-button" onClick={(e)=>{HandleGoogleClick(); renderProps.onClick(e)}} />
+            <Button value="Login With Google" primary loading={gLoginLoading} className="google-login-button" onClick={(e)=>{HandleGoogleClick(); renderProps.onClick(e)}} />
           )}
         />
 
