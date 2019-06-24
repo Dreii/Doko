@@ -29,7 +29,7 @@ export default function HandleNewRooms(newRooms){
   }
 
   //select the new closest room but dont pan.
-  if(rooms) this.SelectRoom(rooms[0]._id, {dontPan: true})
+  if(rooms.length > 0) this.SelectRoom(rooms[0]._id, {dontPan: true})
 
   //Finally we want to restructure our list of rooms filtered through the users search string.
   let filteredRooms = searchString !== "" ? FilterRooms(searchString, rooms) : rooms
