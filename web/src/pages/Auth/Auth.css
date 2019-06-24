@@ -42,6 +42,9 @@
 .button.google-login-button:hover{box-shadow: 6px 6px 6px rgba(255, 118, 117, .10);}
 
 
+.button.login-toggle{color: #3486a4;}
+.button.signup-toggle{color: #3486a4;}
+
 .city-background-display{
   position: absolute;
   bottom: 0;
@@ -58,6 +61,8 @@
   background-color: #FFE8BE;
   border-radius: 100%;
   width: 50vw;
+  max-width: 256px;
+  max-height: 256px;
   height: 50vw;
   left: 25vw;
 }

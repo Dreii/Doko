@@ -12,7 +12,7 @@ const Signup = ({email, password, passwordConfirm, HandleSignup, ChangeField, Ch
       <TextInput value={password} type="password" placeholder="Password" onChange={(e)=>ChangeField(e.target.value, "password")}/>
       <TextInput value={passwordConfirm} type="password" placeholder="Password Confirm" onChange={(e)=>ChangeField(e.target.value, "passwordConfirm")}/>
       <Button value="Sign Up" primary onClick={HandleSignup} loading={loading} success={success} />
-      <Button value="Log In" noBack onClick={()=>ChangePage("login")}/>
+      <Button className="login-toggle" value="Log In" noBack onClick={()=>ChangePage("login")}/>
     </div>
   </div>
 )

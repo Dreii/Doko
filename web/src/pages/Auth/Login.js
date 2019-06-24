@@ -22,7 +22,7 @@ const Login = ({
 
         <Button value="Log In" primary loading={loginLoading} onClick={HandleLogin} />
 
-        {/* <FacebookLogin
+        <FacebookLogin
           appId={process.env.REACT_APP_FBAPPID}
           fields="name,email,picture.type(large)"
           callback={(data)=> HandleFacebookLogin(data)}
@@ -30,7 +30,7 @@ const Login = ({
           render={renderProps => (
             <Button value="Facebook Login" primary loading={fbLoginLoading} icon="/facebook-icon.svg" className="facebook-login-button" onClick={renderProps.onClick} />
           )}
-        />*/}
+        />
 
         <GoogleLogin
           clientId={process.env.REACT_APP_GAPPID}
@@ -41,7 +41,7 @@ const Login = ({
           )}
         />
 
-        <Button value="Signup" noBack onClick={()=>ChangePage("signup")}/>
+        <Button className="signup-toggle" value="Signup" noBack onClick={()=>ChangePage("signup")}/>
       </div>
     </div>
   )
