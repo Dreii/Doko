@@ -29,8 +29,8 @@ const Login = ({
           onClick={HandleFacebookClick}
           render={renderProps => (
             <Button value="Facebook Login" primary loading={fbLoginLoading} icon="/facebook-icon.svg" className="facebook-login-button" onClick={renderProps.onClick} />
-          )} */}
-        />
+          )}
+        />*/}
 
         <GoogleLogin
           clientId={process.env.REACT_APP_GAPPID}
