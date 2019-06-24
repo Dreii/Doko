@@ -30,7 +30,7 @@ export default function ProfileUpdate(){
     })
     .catch(error => {
       this.props.HandleError(error.toString(), 2)
-      this.setState({loading: false})
+      this.setState({formLoading: false})
     })
   }
 }

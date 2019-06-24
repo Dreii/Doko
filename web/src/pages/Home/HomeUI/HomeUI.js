@@ -103,6 +103,12 @@ class HomeUI extends Component {
 
   HandleSearch = HandleSearch.bind(this)
 
+  HandleError = (err) => {
+    console.log("hello")
+    this.setState({formLoading: false})
+    this.props.handleError(err, 1)
+  }
+
   render() {
     let {
       auth, user, SetAuth, hide, Logout,
@@ -234,6 +240,7 @@ class HomeUI extends Component {
                   onLastNameChange={(e)=>this.ChangeField(e.target.value, "changeLastName")}
                   onSubmit={this.ProfileUpdate}
                   onLogout={Logout}
+                  // HandleError={this.HandleError}
                   loading={formTarget="user-update" && formLoading}
                   success={formTarget="user-update" && formSuccess}
                 />
