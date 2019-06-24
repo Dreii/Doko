@@ -282,11 +282,9 @@ class Home extends Component {
         <Error error={error} level={errorLevel} show={errorShowing} />
 
         {/* if data or map are not ready, show a loading spinner */}
-        {!dataReady && !mapReady && (
-          <div className="loading-container">
-            <ReactLoading type="spin" color="#fff" />
-          </div>
-        )}
+        <div className="loading-container">
+          <ReactLoading type="spin" color="#fff" />
+        </div>
 
         {/*
           HomeUI component controls the main menu of the app, which includes forms for:
