@@ -331,7 +331,7 @@ class Home extends Component {
           //there is no data for it to show, we are placing a new room,
           //the main menu is open, data is not ready, the map is not ready,
           //or a room is open in the Chatroom component.
-          hide={!filteredRooms || placingRoom || menuOpen|| !dataReady || !mapReady || openedRoom !== null}
+          hide={filteredRooms === null || filteredRooms.length === 0 || placingRoom || menuOpen|| !dataReady || !mapReady || openedRoom !== null}
           windowWidth={windowWidth}
 
           //user data

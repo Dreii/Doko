@@ -178,7 +178,7 @@ class Map extends Component {
 
           {/* if the user position is being tracked, and we are not hiding, show a button to pan the map to the users location. */}
           {userPosition && !hide && (
-            <Button svgIcon={<LocationIcon color={"#707070"}/>} id="location-button" className={placingRoom || !filteredRooms ? "bottom":""} onClick={() => this.MoveMap(userPosition)} />
+            <Button svgIcon={<LocationIcon color={"#707070"}/>} id="location-button" className={placingRoom || filteredRooms === null || filteredRooms.length === 0 ? "bottom":""} onClick={() => this.MoveMap(userPosition)} />
           )}
 
           {/* Whenever we search a new location, display a pulse over the map at that location. */}

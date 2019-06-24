@@ -42,6 +42,8 @@ module.exports = async function GetRooms(socket, db, userID, searchLoc, zoom, al
       select: 'name image'
     })
 
+    rooms = rooms.filter(room => room.creator)
+
     rooms.forEach(room => {
       //format the members section to only send the length and the last 3 entries.
       room.membersCount = room.members.length
@@ -51,9 +53,11 @@ module.exports = async function GetRooms(socket, db, userID, searchLoc, zoom, al
       room.pinned = (user.subscriptions.includes(room._id))
 
       //and whether or not this room is created by the requesting user.
-      room.ownedByUser = (room.creator._id.toString() === user._id.toString())
+      room.ownedByUser = (room.creator && room.creator._id.toString() === user._id.toString())
     })
 
+
+    console.log(rooms)
 
     //send the data to the requesting client.
     socket.emit('SERVER_SENDING_ROOM_DATA', rooms)
