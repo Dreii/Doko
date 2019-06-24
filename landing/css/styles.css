@@ -141,7 +141,7 @@ body{
     margin: 0 auto;
   }
 
-  .container{
+  .container.privacy{
     padding: 0;
   }
 

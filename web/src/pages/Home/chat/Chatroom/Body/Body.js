@@ -20,7 +20,8 @@ const Body = ({chatroom, messages, user}) => (
 export default Body
 
 function Message({chatroom, message}){
-  let color = (message.sender && message.sender._id === chatroom.creator._id) ? chatroom.color : message.color
+  console.log(chatroom, message)
+  let color = (message.sender && message.sender._id === chatroom.creator._id) ? chatroom.creator.color : message.color
 
   return(
     <div className={`chat-message ${color} ${message.sender ? "": "missing-user"}`}>

@@ -121,7 +121,7 @@ class Home extends Component {
 
 
   //Capture window width on resize.
-  ResizeHandler = (e) => {this.setState({windowX: window.innerWidth})}
+  ResizeHandler = (e) => {this.setState({windowWidth: window.innerWidth})}
 
 
   //function to let the rest of the app know when all of our data is ready.
