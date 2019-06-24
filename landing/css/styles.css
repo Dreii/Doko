@@ -136,13 +136,13 @@ body{
     text-align: center;
   }
 
-  .home-cta-button{
+  .cta-button{
     width: 75%;
     margin: 0 auto;
   }
 
   .container.privacy{
-    padding: 0;
+    padding: 16px 0;
   }
 
   .privacy-policy{
@@ -162,7 +162,11 @@ body{
     font-size: 12px;
   }
 
-  .home-cta-button{
+  .home .cta-button{
     width: 100%;
+  }
+
+  .privacy .cta-button{
+    width: 90%;
   }
 }
