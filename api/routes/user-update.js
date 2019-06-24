@@ -12,7 +12,7 @@ module.exports = app => {
         &&
         req.body.user.email !== old.email
         &&
-        app.db.functions.verify(req.body.user.email)
+        await app.db.functions.verify(req.body.user.email)
       ) return res.status(401).send("Email already in use!")
 
       let password = req.body.user.password ? app.bcrypt.hashSync(req.body.user.password, 8) : old.password
