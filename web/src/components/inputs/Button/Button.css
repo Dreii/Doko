@@ -34,8 +34,21 @@
 
 .button.value{border-radius: 6px; width: 100%;}
 .button.icon:not(.value){border-radius: 58px}
+.button-icon{background-size: cover;}
 .button.no-back{background: none; box-shadow: none; color: #777777;}
 .button:active, .button:focus{outline: none;}
+
+.button-icon{
+  background: url(https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=10217585430421988&height=200&width=200&ext=1564020524&hash=AeSsv6aa9LmxrSjA);
+  width: 100%;
+  height: 100%;
+  background-size: contain;
+  border-radius: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 3px solid white;
+}
 
 .button:hover{
   outline: none;

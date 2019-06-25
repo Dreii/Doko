@@ -1,5 +1,5 @@
 .Error{
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 48px;
   color: white;

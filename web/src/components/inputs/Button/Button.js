@@ -20,7 +20,9 @@ const Button = ({
   >
     {loading ? (<ReactLoading type="spin" color={primary ? "white":"#707070"} height={32} width={32} />):(success ? (<CheckIcon color="white"/>):(
       <div className="button-inner">
-        {icon ? <img className="button-icon" src={icon} alt={iconAlt || "button icon"}/>:null}
+        {
+          icon ? <div className="button-icon" alt={iconAlt || "button icon"} style={{background: `url("${icon}")`}}></div> : null
+        }
         {svgIcon}
         {value ? <span>{value}</span>:null}
       </div>

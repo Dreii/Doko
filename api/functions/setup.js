@@ -2,7 +2,7 @@ const express = require("express")
 const app = express()
 
 const cors = require('cors')
-const whitelist = ['https://dokomap.io', 'https://www.dokomap.io', 'https://media.dokomap.io', 'https://api.dokomap.io']
+const whitelist = ['https://localhost:3000', 'https://dokomap.io', 'https://www.dokomap.io', 'https://media.dokomap.io', 'https://api.dokomap.io']
 const corsOptions = {
   origin: function (origin, callback) {
     if(!origin) return callback(null, true);

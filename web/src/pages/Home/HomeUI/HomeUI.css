@@ -27,6 +27,10 @@
   box-shadow: 0 4px 6px rgba(9, 132, 227, .30);
 }
 
+.home-ui-button.active .button-icon{
+  border: 3px solid #0984E3;
+}
+
 .home-ui-button{
   position: absolute;
   transition: all 0.3s ease-out;

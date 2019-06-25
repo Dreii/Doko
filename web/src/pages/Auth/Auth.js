@@ -39,7 +39,7 @@ class Auth extends Component {
     if(this.ValidateForm()){
       this.SetLoading(true, "login")
       //SendPost returns a promise so we can manipulate the response.
-      API.SendPost('login', {email: this.state.email, password: this.state.password})
+      API.SendPost('login', {email: this.state.email.toLowerCase(), password: this.state.password})
       .then((res)=> {
         this.props.SetAuth(res.token, res.user)
       })
@@ -48,8 +48,9 @@ class Auth extends Component {
   }
 
   HandleFacebookLogin = (data) => {
+    console.log(data)
     if(!data || !data.accessToken) return this.SetError('Facebook authentication denied', 1)
-    let filteredData = {accessToken: data.accessToken, userID: data.userID, email: data.email, name: data.name, imageURL: data.picture.data.url}
+    let filteredData = {accessToken: data.accessToken, userID: data.id, email: data.email, name: data.name, imageURL: data.picture.data.url}
 
     API.SendPost('fb-login', filteredData)
     .then((res) => {
@@ -79,7 +80,7 @@ class Auth extends Component {
       this.SetLoading(true, "signup")
 
       //SendPost returns a promise so we can manipulate the response.
-      API.SendPost('signup', {email: this.state.email, password: this.state.password})
+      API.SendPost('signup', {email: this.state.email.toLowerCase(), password: this.state.password})
       .then((res)=> {
         this.props.SetAuth(res.token, res.user)
         this.SetLoading(false)
@@ -94,11 +95,20 @@ class Auth extends Component {
   HandleProfileSubmit = () => {
     if(this.ValidateForm()){
       this.SetLoading(true, "update-profile")
+
+      let fName = this.state.firstName,
+          lName = this.state.lastName
+
+      fName = fName.charAt(0).toUpperCase() + fName.slice(1).toLowerCase
+      lName = lName.charAt(0).toUpperCase() + lName.slice(1).toLowerCase
+
+      console.log(fName, lName)
+
       //SendPost returns a promise so we can manipulate the response.
       API.SendPost('user-update', {
         auth: this.props.auth,
         user:{
-          name: this.state.firstName + " " + this.state.lastName
+          name: fName + " " + lName
         }
       })
       .then((res) => {

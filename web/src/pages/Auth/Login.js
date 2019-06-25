@@ -40,7 +40,7 @@ const Login = ({
           scope="public_profile,email"
           responseHandler={(data)=> HandleFacebookLogin(data)}
           // xfbml={true}
-          fields="name,email,picture.type(large)"
+          fields="id,name,email,picture.type(large)"
           version="v2.5"
           className="button value facebook-login-button"
           buttonText="Login With Facebook"
