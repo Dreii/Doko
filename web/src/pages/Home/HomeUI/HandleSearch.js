@@ -3,7 +3,7 @@ import API from '../../../functions/api'
 export default function HandleSearch(){
   let {searchLocation, searchRooms, page} = this.state
 
-  this.props.FilterRooms(this.state.searchRooms)
+  if(searchRooms.length > 0) this.props.FilterRooms(this.state.searchRooms)
 
   if(searchLocation.length > 0){
     this.setState({formLoading: true, formTarget:'search', searchLocation:""})
@@ -17,7 +17,7 @@ export default function HandleSearch(){
         this.props.SetMenuOpen(false)
       }else{
         if(res.status === "NO_RESULTS")
-          this.props.HandleError("no results", 0)
+          this.props.HandleError("location not found", 0)
         else
           this.props.HandleError("error searching", 3)
 

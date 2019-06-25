@@ -4,7 +4,9 @@
 }
 
 html, body, #root, .App, #home{
-  height: 100vh;
+  height: 100%;
   width: 100%;
   overflow: hidden;
+  bottom: 0;
+  position: absolute;
 }
