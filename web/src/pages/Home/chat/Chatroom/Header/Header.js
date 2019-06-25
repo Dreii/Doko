@@ -3,6 +3,7 @@ import ProfileImg from '../../../../../components/display/ProfileImg/ProfileImg'
 import CrownIcon from '../../../../../components/display/Icons/CrownIcon'
 import TackIcon from '../../../../../components/display/Icons/TackIcon'
 import TackPinnedIcon from '../../../../../components/display/Icons/TackPinnedIcon'
+import BackIcon from '../../../../../components/display/Icons/BackIcon'
 import Button from '../../../../../components/inputs/Button/Button'
 import './Header.css'
 
@@ -20,7 +21,7 @@ const Header = ({user, chatroom, CloseRoom, onPin}) => {
       <h1 className="chat-title">{chatroom.name.length > 50 ? `${chatroom.name.substr(0, 50)}...`:chatroom.name}</h1>
 
       <div className="chat-info">
-        <Button className="chat-exit-button" icon="/back-icon.svg" onClick={CloseRoom}/>
+        <Button className="chat-exit-button" svgIcon={<BackIcon color="#707070" />} onClick={CloseRoom}/>
         <p className="distance">{~~chatroom.distance > 0 ? ~~chatroom.distance+'mi':'> 1mi'}</p>
         <div className="member-list">
           <ProfileImg img={chatroom.creator.image} size={48} className="creator-profile" />

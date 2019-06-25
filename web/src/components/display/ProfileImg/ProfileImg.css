@@ -1,6 +1,9 @@
 .profile-img{
   display: inline-block;
-  background-size: cover;
+
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
   border-radius: 100%;
 }
 
