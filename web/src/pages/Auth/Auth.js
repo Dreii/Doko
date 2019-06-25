@@ -68,7 +68,7 @@ class Auth extends Component {
       this.props.SetAuth(res.token, res.user)
     })
     .catch(error => {
-      console.error(error)
+      console.log(error)
       this.SetError(error.message, 2)}
     )
   }
@@ -96,19 +96,11 @@ class Auth extends Component {
     if(this.ValidateForm()){
       this.SetLoading(true, "update-profile")
 
-      let fName = this.state.firstName,
-          lName = this.state.lastName
-
-      fName = fName.charAt(0).toUpperCase() + fName.slice(1).toLowerCase
-      lName = lName.charAt(0).toUpperCase() + lName.slice(1).toLowerCase
-
-      console.log(fName, lName)
-
       //SendPost returns a promise so we can manipulate the response.
       API.SendPost('user-update', {
         auth: this.props.auth,
         user:{
-          name: fName + " " + lName
+          name: this.state.firstName + " " + this.state.lastName
         }
       })
       .then((res) => {
