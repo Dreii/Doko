@@ -15,4 +15,11 @@ module.exports = () => {
 
   //Bind connection to error event (to get notification of connection errors)
   conn.on('error', console.error.bind(console, 'MongoDB connection error:'))
+
+  process.on('SIGINT', function() {
+      conn.close(function () {
+        console.log('Mongoose default connection with DB is disconnected through app termination');
+        process.exit(0);
+      });
+  });
 }
