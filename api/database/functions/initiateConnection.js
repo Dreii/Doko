@@ -3,8 +3,7 @@ module.exports = () => {
   //Set up default mongoose connection
   const mongoDB = `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@${process.env.MONGO_URL}`
   mongoose.connect(mongoDB, {
-    useNewUrlParser: true,
-    socketOptions: { keepAlive: 1, connectTimeoutMS: 30000 }
+    useNewUrlParser: true
   })
   mongoose.set('useCreateIndex', true)
   // Get Mongoose to use the global promise library

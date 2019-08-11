@@ -70,7 +70,4 @@ process.on('unhandledRejection', error => {
   console.error('unhandledRejection', error)
 })
 
-app.closeDBs = ()=>require('./stopDBs')([app.users, app.rooms, app.messages])
-process.on('exit', app.closeDBs)
-
 module.exports =  app
