@@ -1,7 +1,7 @@
 {
   "name": "web",
   "proxy": "https://localhost:3001/",
-  "version": "0.1.0",
+  "version": "0.10.0 -b",
   "private": true,
   "dependencies": {
     "d3-ease": "^1.0.5",
